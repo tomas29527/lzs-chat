@@ -4,6 +4,7 @@ import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.dto.req.AuthReqDto;
 import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.service.AuthService;
+import com.lzs.chat.server.connManager.ConnManagerUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public class AuthServiceImpl implements AuthService {
     @Value("${chat.appkey}")
     private String appkey;
     @Override
-    public Message.Response auth(Message.Request request, AuthReqDto authReq)  {
+    public Message.Response auth(Message.Request request,AuthReqDto authReq)  {
 
         //cacheManager.getCache(CachingConfig.ONLINE).put(req.getUid(), appkey);
         //验证appkey
@@ -43,9 +44,10 @@ public class AuthServiceImpl implements AuthService {
         if(Objects.nonNull(authReq.getRoomId())){
             //首先检查房间号是否存在，是否开播
             //todo
-            //把连接id放到缓存的房间里面
 
         }
+        //验证用户id,生成token
+
         respBuilder.setCode(AppConstants.SUCCESS_CODE);
         respBuilder.setToken("abcd1234");
         return respBuilder.build();

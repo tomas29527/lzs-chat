@@ -8,6 +8,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 /**
  * <一句话说明功能>
  * <功能详细描述>
@@ -30,8 +34,18 @@ public class ChatController {
     @GetMapping("/chatInfo")
     @ResponseBody
     public ChatInfoRespDto chatInfo(){
+        Map<Integer,Integer> roomOlineUsers =new HashMap<>();
+        Set<Integer> integers = ConnManagerUtil.roomIdList();
+
+        for (Integer integer : integers) {
+            roomOlineUsers.put(integer,ConnManagerUtil.countRoomConn(integer));
+        }
         return  ChatInfoRespDto.builder()
                 .countConn(ConnManagerUtil.countClient())
-                 .countRoom(ConnManagerUtil.countRoom()).build();
+                 .countRoom(ConnManagerUtil.countRoom())
+                .roomOlineUsers(roomOlineUsers)
+                .build();
     }
+
+
 }

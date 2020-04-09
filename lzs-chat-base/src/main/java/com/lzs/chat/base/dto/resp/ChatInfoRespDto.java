@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Map;
+
 /**
  * <一句话说明功能>
  * <功能详细描述>
@@ -22,5 +24,6 @@ public class ChatInfoRespDto {
     private int countConn;
     @ApiModelProperty(value = "总房间数")
     private int countRoom;
-
+    @ApiModelProperty(value = "房间在线人数")
+    private Map<Integer,Integer> roomOlineUsers;
 }

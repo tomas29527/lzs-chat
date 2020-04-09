@@ -2,9 +2,11 @@ package com.lzs.chat.server.connManager;
 
 import com.google.common.collect.Maps;
 import com.lzs.chat.base.bean.Client;
+import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.protobuf.Message;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
 import java.util.*;
@@ -74,7 +76,7 @@ public class ConnManagerUtil {
         long oldtime=System.currentTimeMillis();
         //需要枷锁
         synchronized (ROOM_CONN_MAP) {
-            if (CollectionUtils.isEmpty(connIds)) {
+            if (!CollectionUtils.isEmpty(connIds)) {
                 Iterator<String> iterator = connIds.iterator();
                 while (iterator.hasNext()){
                     String next = iterator.next();
@@ -82,6 +84,10 @@ public class ConnManagerUtil {
                         iterator.remove();
                     }
                 }
+            }
+            //如果房间人数为0时，删除房间key
+            if(connIds.size()<1){
+                ROOM_CONN_MAP.remove(roomId);
             }
         }
         long newtime=System.currentTimeMillis();
@@ -97,6 +103,14 @@ public class ConnManagerUtil {
      */
     public static int countRoom(){
        return  ROOM_CONN_MAP.size();
+    }
+
+    /**
+     * 总的房间id
+     * @return
+     */
+    public static Set<Integer> roomIdList(){
+        return ROOM_CONN_MAP.keySet();
     }
 
     /**
@@ -130,6 +144,24 @@ public class ConnManagerUtil {
         //当循环大于50ms打报警日志
         if(newtime-oldtime>50){
             log.warn("========房间人数发消息时间有点长 roomsize:{}",connIds.size());
+        }
+    }
+
+    /**
+     * 关闭连接
+     * @param channel
+     */
+    public static void closeConn(Channel channel){
+        String connId = channel.attr(AppConstants.KEY_CONN_ID).get();
+        String roomId = channel.attr(AppConstants.KEY_ROOM_ID).get();
+        if (StringUtils.isNotBlank(connId)) {
+            ConnManagerUtil.clientRemove(connId);
+        }
+        if(StringUtils.isNotBlank(roomId)){
+            ConnManagerUtil.roomConnRemove(Integer.valueOf(roomId),connId);
+        }
+        if(channel.isActive()){
+            channel.close();
         }
     }
 }

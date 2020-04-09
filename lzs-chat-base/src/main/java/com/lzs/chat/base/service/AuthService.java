@@ -11,9 +11,9 @@ public interface AuthService {
 
     /**
      * 用户身份验证
-     * @param request    协议
+     * @param request
+     * @param authReq
      * @return
-     *
      */
     Message.Response auth(Message.Request request, AuthReqDto authReq);
 
