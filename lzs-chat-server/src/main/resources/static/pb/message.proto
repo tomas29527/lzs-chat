@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+option java_package = "com.lzs.chat.base.protobuf";
+option java_outer_classname = "Message";
+option optimize_for = LITE_RUNTIME;
+
+message Request {
+    //appkey 分发的
+    string appkey = 1;
+    //操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6 消息回复
+    uint32 operation = 2;
+    //需要调用的方法operation=5时 必须传
+    string cmd = 3;
+    //token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+    string token = 4;
+    //接口版本号 初始为1
+    uint32 version = 5;
+    //消息内容 json字符串{"",""}
+    string data = 6;
+}
+
+message Response {
+    //操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6 消息回复
+    uint32 operation = 1;
+    //消息码 1 成功 0 失败
+    uint32 code = 2;
+    // operation=2 时 返回token,其他时候不返回数据
+    string token = 3;
+    //结果信息
+    string msg=4;
+    //消息内容 json字符串
+    string data = 5;
+}

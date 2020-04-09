@@ -1,0 +1,7 @@
+chat:
+  appkey: 1233
+  websocket:
+    port: 9001
+# 日志
+logging:
+  config: classpath:logback.xml

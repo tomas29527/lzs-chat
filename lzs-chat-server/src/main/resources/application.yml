@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: lzs-chat
+  profiles:
+    active: dev
+server:
+  port: 8088
+  thymeleaf:
+    prefix: 'classpath:/templates'
+    suffix: .html
+    cache: false
+  tomcat:
+    max-threads: 500
+    min-spare-threads: 10
+  connection-timeout: 5000
