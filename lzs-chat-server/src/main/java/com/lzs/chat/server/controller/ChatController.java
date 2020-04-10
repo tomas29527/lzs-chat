@@ -26,8 +26,10 @@ import java.util.Set;
 public class ChatController {
 
     @GetMapping(value = {"index", ""})
-    public String index(Model model) {
+    public String index(Model model, String userId, Integer roomId) {
         log.info("===========================");
+        model.addAttribute("userId",userId);
+        model.addAttribute("roomId",roomId);
         return "/demo";
     }
 

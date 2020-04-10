@@ -11,6 +11,8 @@
 </head>
 <body>
     <h1>client demo</h1>
+    <input id="user_id" type="hidden" th:value="${userId}">
+    <input id="room_id" type="hidden" th:value="${roomId}">
     <input id="send_msg" type="text" >
     <input id="sendButton" type="button" value="发送" >
     <div style="height: 400px;width: 400px; background: bisque">
@@ -30,7 +32,10 @@
         const opAuth = 1, opAuthReply=2, opHeartbeat=3, opHeartbeatReply=4, opMessage=5, opMessageReply=6;
         var heartbeatInterval;
         var ws
+
         function connect() {
+            console.log("===========userId:"+$("#user_id").val())
+            console.log("===========roomId:"+$("#room_id").val())
             ws = new WebSocket('ws://127.0.0.1:9001/chat');
             ws.binaryType = 'arraybuffer';
             ws.onopen = function() {
@@ -72,8 +77,10 @@
                     case opMessageReply:
                         // 消息
                         if(resp.code == 1){
-                            $("#content").append($("#send_msg").val())
-                            $("#send_msg").val("")
+
+                            if(resp.cmd=="user_online_cmd"){
+                                $("#content").append("欢迎["+resp.data+"]进入聊天室")
+                            }
                         }
                     break;
                 }
@@ -104,7 +111,9 @@
                 req.appkey = "1233";
                 req.operation = 1;
                 req.version = 1;
-                var jsonObj = "{\"userId\":\"112233\",\"roomId\":54321}";
+                var userId = $("#user_id").val()
+                var roomId =$("#room_id").val()
+                var jsonObj = "{\"userId\":"+userId+",\"roomId\":"+roomId+"}";
                 req.data=jsonObj;
                 // var headerBuf = new ArrayBuffer(rawHeaderLen);
                 // var headerView = new DataView(headerBuf, 0);
@@ -132,8 +141,11 @@
             req.operation = 5;
             req.version = 1;
             req.token="abcd1234"
-            req.data="{'userId:'112233','roomId':54321,msg="+msg+"}"
+            var msgData ="{\"userId\":"+userId+",\"roomId\":"+roomId+",\"msg\":"+msg+"}"
+            req.data=msgData;
             ws.send(req.toArrayBuffer());
+            $("#content").append($("#send_msg").val())
+            $("#send_msg").val("")
         }
         connect();
 

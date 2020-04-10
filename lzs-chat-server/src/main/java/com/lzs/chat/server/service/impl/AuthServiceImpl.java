@@ -2,9 +2,9 @@ package com.lzs.chat.server.service.impl;
 
 import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.dto.req.AuthReqDto;
+import com.lzs.chat.base.enums.AppEnum;
 import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.service.AuthService;
-import com.lzs.chat.server.connManager.ConnManagerUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -36,8 +36,7 @@ public class AuthServiceImpl implements AuthService {
         Message.Response.Builder respBuilder = Message.Response.newBuilder();
         respBuilder.setOperation(AppConstants.OP_AUTH_REPLY);
         if(!appkey.equals(request.getAppkey())){
-            respBuilder.setCode(AppConstants.FAIL_CODE);
-            respBuilder.setMsg("appkey不一致");
+            respBuilder.setCode(AppEnum.SYSTEM_ERROR_APPKEY.getCode());
             return respBuilder.build();
         }
         //检查是否有房间号

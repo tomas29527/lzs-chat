@@ -28,8 +28,8 @@ message Response {
     uint32 code = 2;
     // operation=2 时 返回token,其他时候不返回数据
     string token = 3;
-    //结果信息
-    string msg=4;
+    //需要调用的方法operation=6时 必须传
+    string cmd = 4;
     //消息内容 json字符串
     string data = 5;
 }

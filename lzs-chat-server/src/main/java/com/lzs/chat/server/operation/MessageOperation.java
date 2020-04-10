@@ -33,6 +33,10 @@ public class MessageOperation extends AbstractOperation {
         //处理消息
         //TODO
         //receive a message
+        int operation = request.getOperation();
+        String cmd = request.getCmd();
+        String data = request.getData();
+
         Message.Response resp = msgService.receive(request);
 
         // write message reply

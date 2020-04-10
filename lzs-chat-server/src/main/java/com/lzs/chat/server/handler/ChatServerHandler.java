@@ -86,8 +86,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Reque
         log.error("异常消息", cause);
         Message.Response response = Message.Response.newBuilder()
                 .setCode(AppEnum.SYSTEM_ERROR.getCode())
-                .setOperation(AppConstants.OP_MESSAGE_REPLY)
-                .setMsg(AppEnum.SYSTEM_ERROR.getMsg()).build();
+                .setOperation(AppConstants.OP_MESSAGE_REPLY).build();
         ctx.writeAndFlush(response);
         //ctx.close();
     }

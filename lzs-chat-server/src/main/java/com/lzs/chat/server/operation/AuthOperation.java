@@ -2,6 +2,7 @@ package com.lzs.chat.server.operation;
 
 import com.alibaba.fastjson.JSON;
 import com.lzs.chat.base.constans.AppConstants;
+import com.lzs.chat.base.constans.CmdConstants;
 import com.lzs.chat.base.dto.req.AuthReqDto;
 import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.service.AuthService;
@@ -41,6 +42,16 @@ public class AuthOperation extends AbstractOperation {
                     ch.attr(AppConstants.KEY_ROOM_ID).set(String.valueOf(authReq.getRoomId()));
                 }
                 ConnManagerUtil.roomConnPut(authReq.getRoomId(),getKey(ch));
+
+                //新用户加入直播间 通知大家
+                Message.Response resp=Message.Response.newBuilder()
+                        .setCode(AppConstants.SUCCESS_CODE)
+                        .setOperation(AppConstants.OP_MESSAGE_REPLY)
+                        .setCmd(CmdConstants.USER_ONLINE_CMD)
+                        .setData(authReq.getUserId()).build();
+
+                ConnManagerUtil.sendMsgToRoomOtherConn(authReq.getRoomId(),
+                        ch.attr(AppConstants.KEY_CONN_ID).get(),resp);
             }
         }
         // write reply

@@ -20,7 +20,7 @@ public final class Message {
 
     /**
      * <pre>
-     *appkey 分发的
+     *appkey 分发的(必传)
      * </pre>
      *
      * <code>string appkey = 1;</code>
@@ -29,7 +29,7 @@ public final class Message {
     String getAppkey();
     /**
      * <pre>
-     *appkey 分发的
+     *appkey 分发的(必传)
      * </pre>
      *
      * <code>string appkey = 1;</code>
@@ -40,7 +40,7 @@ public final class Message {
 
     /**
      * <pre>
-     *操作类型 0 验证请求 1 验证回复 ，2 心跳请求 3 心跳回复, 4 消息请求,5 消息回复
+     *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
      * </pre>
      *
      * <code>uint32 operation = 2;</code>
@@ -70,7 +70,7 @@ public final class Message {
 
     /**
      * <pre>
-     *token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+     *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
      * </pre>
      *
      * <code>string token = 4;</code>
@@ -79,7 +79,7 @@ public final class Message {
     String getToken();
     /**
      * <pre>
-     *token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+     *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
      * </pre>
      *
      * <code>string token = 4;</code>
@@ -237,7 +237,7 @@ public final class Message {
     private volatile Object appkey_;
     /**
      * <pre>
-     *appkey 分发的
+     *appkey 分发的(必传)
      * </pre>
      *
      * <code>string appkey = 1;</code>
@@ -257,7 +257,7 @@ public final class Message {
     }
     /**
      * <pre>
-     *appkey 分发的
+     *appkey 分发的(必传)
      * </pre>
      *
      * <code>string appkey = 1;</code>
@@ -281,7 +281,7 @@ public final class Message {
     private int operation_;
     /**
      * <pre>
-     *操作类型 0 验证请求 1 验证回复 ，2 心跳请求 3 心跳回复, 4 消息请求,5 消息回复
+     *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
      * </pre>
      *
      * <code>uint32 operation = 2;</code>
@@ -339,7 +339,7 @@ public final class Message {
     private volatile Object token_;
     /**
      * <pre>
-     *token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+     *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
      * </pre>
      *
      * <code>string token = 4;</code>
@@ -359,7 +359,7 @@ public final class Message {
     }
     /**
      * <pre>
-     *token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+     *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
      * </pre>
      *
      * <code>string token = 4;</code>
@@ -827,7 +827,7 @@ public final class Message {
       private Object appkey_ = "";
       /**
        * <pre>
-       *appkey 分发的
+       *appkey 分发的(必传)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -847,7 +847,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *appkey 分发的
+       *appkey 分发的(必传)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -868,7 +868,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *appkey 分发的
+       *appkey 分发的(必传)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -887,7 +887,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *appkey 分发的
+       *appkey 分发的(必传)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -901,7 +901,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *appkey 分发的
+       *appkey 分发的(必传)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -923,7 +923,7 @@ public final class Message {
       private int operation_ ;
       /**
        * <pre>
-       *操作类型 0 验证请求 1 验证回复 ，2 心跳请求 3 心跳回复, 4 消息请求,5 消息回复
+       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
        * </pre>
        *
        * <code>uint32 operation = 2;</code>
@@ -934,7 +934,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *操作类型 0 验证请求 1 验证回复 ，2 心跳请求 3 心跳回复, 4 消息请求,5 消息回复
+       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
        * </pre>
        *
        * <code>uint32 operation = 2;</code>
@@ -949,7 +949,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *操作类型 0 验证请求 1 验证回复 ，2 心跳请求 3 心跳回复, 4 消息请求,5 消息回复
+       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
        * </pre>
        *
        * <code>uint32 operation = 2;</code>
@@ -1061,7 +1061,7 @@ public final class Message {
       private Object token_ = "";
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1081,7 +1081,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1102,7 +1102,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1121,7 +1121,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1135,7 +1135,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 3,5,操作必须传
+       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1390,23 +1390,23 @@ public final class Message {
 
     /**
      * <pre>
-     *结果信息
+     *需要调用的方法operation=6时 必须传
      * </pre>
      *
-     * <code>string msg = 4;</code>
-     * @return The msg.
+     * <code>string cmd = 4;</code>
+     * @return The cmd.
      */
-    String getMsg();
+    String getCmd();
     /**
      * <pre>
-     *结果信息
+     *需要调用的方法operation=6时 必须传
      * </pre>
      *
-     * <code>string msg = 4;</code>
-     * @return The bytes for msg.
+     * <code>string cmd = 4;</code>
+     * @return The bytes for cmd.
      */
     com.google.protobuf.ByteString
-        getMsgBytes();
+        getCmdBytes();
 
     /**
      * <pre>
@@ -1442,7 +1442,7 @@ public final class Message {
     }
     private Response() {
       token_ = "";
-      msg_ = "";
+      cmd_ = "";
       data_ = "";
     }
 
@@ -1495,7 +1495,7 @@ public final class Message {
             case 34: {
               String s = input.readStringRequireUtf8();
 
-              msg_ = s;
+              cmd_ = s;
               break;
             }
             case 42: {
@@ -1608,44 +1608,44 @@ public final class Message {
       }
     }
 
-    public static final int MSG_FIELD_NUMBER = 4;
-    private volatile Object msg_;
+    public static final int CMD_FIELD_NUMBER = 4;
+    private volatile Object cmd_;
     /**
      * <pre>
-     *结果信息
+     *需要调用的方法operation=6时 必须传
      * </pre>
      *
-     * <code>string msg = 4;</code>
-     * @return The msg.
+     * <code>string cmd = 4;</code>
+     * @return The cmd.
      */
-    public String getMsg() {
-      Object ref = msg_;
+    public String getCmd() {
+      Object ref = cmd_;
       if (ref instanceof String) {
         return (String) ref;
       } else {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         String s = bs.toStringUtf8();
-        msg_ = s;
+        cmd_ = s;
         return s;
       }
     }
     /**
      * <pre>
-     *结果信息
+     *需要调用的方法operation=6时 必须传
      * </pre>
      *
-     * <code>string msg = 4;</code>
-     * @return The bytes for msg.
+     * <code>string cmd = 4;</code>
+     * @return The bytes for cmd.
      */
     public com.google.protobuf.ByteString
-        getMsgBytes() {
-      Object ref = msg_;
+        getCmdBytes() {
+      Object ref = cmd_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b =
             com.google.protobuf.ByteString.copyFromUtf8(
                 (String) ref);
-        msg_ = b;
+        cmd_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
@@ -1719,8 +1719,8 @@ public final class Message {
       if (!getTokenBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 3, token_);
       }
-      if (!getMsgBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, msg_);
+      if (!getCmdBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, cmd_);
       }
       if (!getDataBytes().isEmpty()) {
         com.google.protobuf.GeneratedMessageV3.writeString(output, 5, data_);
@@ -1745,8 +1745,8 @@ public final class Message {
       if (!getTokenBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, token_);
       }
-      if (!getMsgBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, msg_);
+      if (!getCmdBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, cmd_);
       }
       if (!getDataBytes().isEmpty()) {
         size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, data_);
@@ -1772,8 +1772,8 @@ public final class Message {
           != other.getCode()) return false;
       if (!getToken()
           .equals(other.getToken())) return false;
-      if (!getMsg()
-          .equals(other.getMsg())) return false;
+      if (!getCmd()
+          .equals(other.getCmd())) return false;
       if (!getData()
           .equals(other.getData())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
@@ -1793,8 +1793,8 @@ public final class Message {
       hash = (53 * hash) + getCode();
       hash = (37 * hash) + TOKEN_FIELD_NUMBER;
       hash = (53 * hash) + getToken().hashCode();
-      hash = (37 * hash) + MSG_FIELD_NUMBER;
-      hash = (53 * hash) + getMsg().hashCode();
+      hash = (37 * hash) + CMD_FIELD_NUMBER;
+      hash = (53 * hash) + getCmd().hashCode();
       hash = (37 * hash) + DATA_FIELD_NUMBER;
       hash = (53 * hash) + getData().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -1936,7 +1936,7 @@ public final class Message {
 
         token_ = "";
 
-        msg_ = "";
+        cmd_ = "";
 
         data_ = "";
 
@@ -1969,7 +1969,7 @@ public final class Message {
         result.operation_ = operation_;
         result.code_ = code_;
         result.token_ = token_;
-        result.msg_ = msg_;
+        result.cmd_ = cmd_;
         result.data_ = data_;
         onBuilt();
         return result;
@@ -2029,8 +2029,8 @@ public final class Message {
           token_ = other.token_;
           onChanged();
         }
-        if (!other.getMsg().isEmpty()) {
-          msg_ = other.msg_;
+        if (!other.getCmd().isEmpty()) {
+          cmd_ = other.cmd_;
           onChanged();
         }
         if (!other.getData().isEmpty()) {
@@ -2246,22 +2246,22 @@ public final class Message {
         return this;
       }
 
-      private Object msg_ = "";
+      private Object cmd_ = "";
       /**
        * <pre>
-       *结果信息
+       *需要调用的方法operation=6时 必须传
        * </pre>
        *
-       * <code>string msg = 4;</code>
-       * @return The msg.
+       * <code>string cmd = 4;</code>
+       * @return The cmd.
        */
-      public String getMsg() {
-        Object ref = msg_;
+      public String getCmd() {
+        Object ref = cmd_;
         if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           String s = bs.toStringUtf8();
-          msg_ = s;
+          cmd_ = s;
           return s;
         } else {
           return (String) ref;
@@ -2269,20 +2269,20 @@ public final class Message {
       }
       /**
        * <pre>
-       *结果信息
+       *需要调用的方法operation=6时 必须传
        * </pre>
        *
-       * <code>string msg = 4;</code>
-       * @return The bytes for msg.
+       * <code>string cmd = 4;</code>
+       * @return The bytes for cmd.
        */
       public com.google.protobuf.ByteString
-          getMsgBytes() {
-        Object ref = msg_;
+          getCmdBytes() {
+        Object ref = cmd_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
-          msg_ = b;
+          cmd_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -2290,54 +2290,54 @@ public final class Message {
       }
       /**
        * <pre>
-       *结果信息
+       *需要调用的方法operation=6时 必须传
        * </pre>
        *
-       * <code>string msg = 4;</code>
-       * @param value The msg to set.
+       * <code>string cmd = 4;</code>
+       * @param value The cmd to set.
        * @return This builder for chaining.
        */
-      public Builder setMsg(
+      public Builder setCmd(
           String value) {
         if (value == null) {
     throw new NullPointerException();
   }
 
-        msg_ = value;
+        cmd_ = value;
         onChanged();
         return this;
       }
       /**
        * <pre>
-       *结果信息
+       *需要调用的方法operation=6时 必须传
        * </pre>
        *
-       * <code>string msg = 4;</code>
+       * <code>string cmd = 4;</code>
        * @return This builder for chaining.
        */
-      public Builder clearMsg() {
+      public Builder clearCmd() {
 
-        msg_ = getDefaultInstance().getMsg();
+        cmd_ = getDefaultInstance().getCmd();
         onChanged();
         return this;
       }
       /**
        * <pre>
-       *结果信息
+       *需要调用的方法operation=6时 必须传
        * </pre>
        *
-       * <code>string msg = 4;</code>
-       * @param value The bytes for msg to set.
+       * <code>string cmd = 4;</code>
+       * @param value The bytes for cmd to set.
        * @return This builder for chaining.
        */
-      public Builder setMsgBytes(
+      public Builder setCmdBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
 
-        msg_ = value;
+        cmd_ = value;
         onChanged();
         return this;
       }
@@ -2513,7 +2513,7 @@ public final class Message {
       "(\t\022\021\n\toperation\030\002 \001(\r\022\013\n\003cmd\030\003 \001(\t\022\r\n\005to" +
       "ken\030\004 \001(\t\022\017\n\007version\030\005 \001(\r\022\014\n\004data\030\006 \001(\t" +
       "\"U\n\010Response\022\021\n\toperation\030\001 \001(\r\022\014\n\004code\030" +
-      "\002 \001(\r\022\r\n\005token\030\003 \001(\t\022\013\n\003msg\030\004 \001(\t\022\014\n\004dat" +
+      "\002 \001(\r\022\r\n\005token\030\003 \001(\t\022\013\n\003cmd\030\004 \001(\t\022\014\n\004dat" +
       "a\030\005 \001(\tB\'\n\032com.lzs.chat.base.protobufB\007M" +
       "essageH\003b\006proto3"
     };
@@ -2532,7 +2532,7 @@ public final class Message {
     internal_static_Response_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_Response_descriptor,
-        new String[] { "Operation", "Code", "Token", "Msg", "Data", });
+        new String[] { "Operation", "Code", "Token", "Cmd", "Data", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -133,10 +133,37 @@ public class ConnManagerUtil {
         long oldtime=System.currentTimeMillis();
         for (String connId : connIds) {
             Client client = CLIENT_MAP.get(connId);
-            if(Objects.isNull(client)){
+            if(Objects.nonNull(client)){
                 Channel channel = client.getChannel();
                 if(channel.isActive()){
                     channel.writeAndFlush(response);
+                }
+            }
+        }
+        long newtime=System.currentTimeMillis();
+        //当循环大于50ms打报警日志
+        if(newtime-oldtime>50){
+            log.warn("========房间人数发消息时间有点长 roomsize:{}",connIds.size());
+        }
+    }
+
+    /**
+     * 给其他链接发消息
+     * @param roomId
+     * @param connId
+     * @param response
+     */
+    public static void sendMsgToRoomOtherConn(Integer roomId,String connId, Message.Response response){
+        List<String> connIds = ROOM_CONN_MAP.get(roomId);
+        long oldtime=System.currentTimeMillis();
+        for (String conn : connIds) {
+            if(!connId.equals(conn)){
+                Client client = CLIENT_MAP.get(conn);
+                if(Objects.nonNull(client)){
+                    Channel channel = client.getChannel();
+                    if(channel.isActive()){
+                        channel.writeAndFlush(response);
+                    }
                 }
             }
         }
@@ -155,10 +182,10 @@ public class ConnManagerUtil {
         String connId = channel.attr(AppConstants.KEY_CONN_ID).get();
         String roomId = channel.attr(AppConstants.KEY_ROOM_ID).get();
         if (StringUtils.isNotBlank(connId)) {
-            ConnManagerUtil.clientRemove(connId);
+            clientRemove(connId);
         }
         if(StringUtils.isNotBlank(roomId)){
-            ConnManagerUtil.roomConnRemove(Integer.valueOf(roomId),connId);
+            roomConnRemove(Integer.valueOf(roomId),connId);
         }
         if(channel.isActive()){
             channel.close();

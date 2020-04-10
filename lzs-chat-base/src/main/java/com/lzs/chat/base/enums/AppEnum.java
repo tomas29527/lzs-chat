@@ -13,7 +13,8 @@ public enum AppEnum {
     /**
      * 错误码从 01 开始 不要乱定义
      */
-    SYSTEM_ERROR(01, "系统异常"),;
+    SYSTEM_ERROR(01, "系统异常"),
+    SYSTEM_ERROR_APPKEY(02, "appkey不一致"),;
 
     private int code;
     private String msg;
