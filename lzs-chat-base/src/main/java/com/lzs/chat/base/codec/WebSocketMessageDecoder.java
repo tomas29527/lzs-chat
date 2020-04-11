@@ -32,7 +32,6 @@ public class WebSocketMessageDecoder extends MessageToMessageDecoder<WebSocketFr
         }
         //二进制帧处理,将帧的内容往下传
         else if (frame instanceof BinaryWebSocketFrame) {
-            System.out.println("The WebSocketFrame is BinaryWebSocketFrame");
             BinaryWebSocketFrame binaryWebSocketFrame = (BinaryWebSocketFrame) frame;
             byte[] by = new byte[frame.content().readableBytes()];
             binaryWebSocketFrame.content().readBytes(by);

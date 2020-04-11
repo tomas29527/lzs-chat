@@ -25,12 +25,12 @@ import java.util.Set;
 @Slf4j
 public class ChatController {
 
-    @GetMapping(value = {"index", ""})
+    @GetMapping(value = {"/index", ""})
     public String index(Model model, String userId, Integer roomId) {
         log.info("===========================");
         model.addAttribute("userId",userId);
         model.addAttribute("roomId",roomId);
-        return "/demo";
+        return "demo";
     }
 
     @GetMapping("/chatInfo")
