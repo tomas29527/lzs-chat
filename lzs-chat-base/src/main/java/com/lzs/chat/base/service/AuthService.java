@@ -11,11 +11,11 @@ public interface AuthService {
 
     /**
      * 用户身份验证
-     * @param request
+     * @param protocol
      * @param authReq
      * @return
      */
-    Message.Response auth(Message.Request request, AuthReqDto authReq);
+    Message.Protocol auth(Message.Protocol protocol, AuthReqDto authReq);
 
 
 }

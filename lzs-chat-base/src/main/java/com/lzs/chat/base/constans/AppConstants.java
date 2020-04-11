@@ -7,8 +7,8 @@ public class AppConstants {
     public static final AttributeKey<String> KEY_CONN_ID = AttributeKey.valueOf("conn_key");
     public static final AttributeKey<String> KEY_ROOM_ID = AttributeKey.valueOf("room_key");
     //返回码 1 成功 0失败
-    public static final int SUCCESS_CODE=1;
-    public static final int FAIL_CODE=0;
+    public static final String SUCCESS_CODE="1";
+    public static final String FAIL_CODE="0";
 
     //认证
     public static final int OP_AUTH = 1;

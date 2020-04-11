@@ -10,6 +10,6 @@ public interface Operation {
 
     Integer op();
 
-    void action(Channel ch, Message.Request request) throws Exception;
+    void action(Channel ch, Message.Protocol protocol) throws Exception;
 
 }

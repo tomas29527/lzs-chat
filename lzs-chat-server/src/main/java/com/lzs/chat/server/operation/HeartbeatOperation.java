@@ -17,11 +17,11 @@ public class HeartbeatOperation  extends AbstractOperation {
     }
 
     @Override
-    public void action(Channel ch, Message.Request request) throws Exception {
+    public void action(Channel ch, Message.Protocol protocol) throws Exception {
         //验证消息
 
         // write heartbeat reply
-        Message.Response.Builder respBuilder = Message.Response.newBuilder();
+        Message.Protocol.Builder respBuilder = Message.Protocol.newBuilder();
         respBuilder.setOperation(AppConstants.OP_AUTH_REPLY);
         respBuilder.setCode(AppConstants.SUCCESS_CODE);
 

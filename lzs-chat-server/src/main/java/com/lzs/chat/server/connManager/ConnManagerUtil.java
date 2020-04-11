@@ -126,9 +126,9 @@ public class ConnManagerUtil {
     /**
      * 给房间所有用户发信息
      * @param roomId
-     * @param response
+     * @param protocol
      */
-    public static void sendMsgToRoomConn(Integer roomId, Message.Response response){
+    public static void sendMsgToRoomConn(Integer roomId, Message.Protocol protocol){
         List<String> connIds = ROOM_CONN_MAP.get(roomId);
         long oldtime=System.currentTimeMillis();
         for (String connId : connIds) {
@@ -136,7 +136,7 @@ public class ConnManagerUtil {
             if(Objects.nonNull(client)){
                 Channel channel = client.getChannel();
                 if(channel.isActive()){
-                    channel.writeAndFlush(response);
+                    channel.writeAndFlush(protocol);
                 }
             }
         }
@@ -148,12 +148,12 @@ public class ConnManagerUtil {
     }
 
     /**
-     * 给其他链接发消息
+     * 给房间其他用户发信息
      * @param roomId
      * @param connId
-     * @param response
+     * @param protocol
      */
-    public static void sendMsgToRoomOtherConn(Integer roomId,String connId, Message.Response response){
+    public static void sendMsgToRoomOtherConn(Integer roomId,String connId, Message.Protocol protocol){
         List<String> connIds = ROOM_CONN_MAP.get(roomId);
         long oldtime=System.currentTimeMillis();
         for (String conn : connIds) {
@@ -162,7 +162,7 @@ public class ConnManagerUtil {
                 if(Objects.nonNull(client)){
                     Channel channel = client.getChannel();
                     if(channel.isActive()){
-                        channel.writeAndFlush(response);
+                        channel.writeAndFlush(protocol);
                     }
                 }
             }

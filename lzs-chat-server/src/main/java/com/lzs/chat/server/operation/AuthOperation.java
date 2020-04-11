@@ -6,6 +6,7 @@ import com.lzs.chat.base.constans.CmdConstants;
 import com.lzs.chat.base.dto.req.AuthReqDto;
 import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.service.AuthService;
+import com.lzs.chat.base.util.ProtocolUtil;
 import com.lzs.chat.server.connManager.ConnManagerUtil;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
@@ -30,11 +31,11 @@ public class AuthOperation extends AbstractOperation {
     }
 
     @Override
-    public void action(Channel ch, Message.Request request) throws Exception {
-        AuthReqDto authReq = JSON.parseObject(request.getData(), AuthReqDto.class);
+    public void action(Channel ch, Message.Protocol protocol) throws Exception {
+        AuthReqDto authReq = JSON.parseObject(protocol.getData(), AuthReqDto.class);
         // connection auth
-        Message.Response response = authService.auth(request,authReq);
-        if(AppConstants.SUCCESS_CODE==response.getCode()){
+        Message.Protocol response = authService.auth(protocol,authReq);
+        if(AppConstants.SUCCESS_CODE.equals(response.getCode())){
             //再把根据房间id 分别放入
             //把连接id放到缓存的房间里面
             if(Objects.nonNull(authReq.getRoomId())){
@@ -44,14 +45,9 @@ public class AuthOperation extends AbstractOperation {
                 ConnManagerUtil.roomConnPut(authReq.getRoomId(),getKey(ch));
 
                 //新用户加入直播间 通知大家
-                Message.Response resp=Message.Response.newBuilder()
-                        .setCode(AppConstants.SUCCESS_CODE)
-                        .setOperation(AppConstants.OP_MESSAGE_REPLY)
-                        .setCmd(CmdConstants.USER_ONLINE_CMD)
-                        .setData(authReq.getUserId()).build();
-
+                Message.Protocol onlienProto = ProtocolUtil.buildUserOnlienMsg(AppConstants.OP_MESSAGE, CmdConstants.USER_ONLINE_CMD, authReq.getUserId());
                 ConnManagerUtil.sendMsgToRoomOtherConn(authReq.getRoomId(),
-                        ch.attr(AppConstants.KEY_CONN_ID).get(),resp);
+                        ch.attr(AppConstants.KEY_CONN_ID).get(),onlienProto);
             }
         }
         // write reply

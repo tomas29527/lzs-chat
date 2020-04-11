@@ -43,7 +43,7 @@ public class WebSocketServerInitializer extends ChannelInitializer<NioSocketChan
         //半包处理
         pipeline.addLast(new ProtobufVarint32LengthFieldPrepender());
         //protbuf解码
-        pipeline.addLast(new ProtobufDecoder(Message.Request.getDefaultInstance()));
+        pipeline.addLast(new ProtobufDecoder(Message.Protocol.getDefaultInstance()));
         // 协议包编码
         pipeline.addLast(new WebSocketMessageEncoder());
         // 处理 TextWebSocketFrame

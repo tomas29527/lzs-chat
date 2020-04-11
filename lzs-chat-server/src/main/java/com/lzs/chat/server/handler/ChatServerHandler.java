@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 @Service
 @Scope("prototype")
 @Slf4j
-public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Request> {
+public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Protocol> {
 
     @Autowired
     private ChatOperation chatOperation;
@@ -62,15 +62,15 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Reque
     }
 
     @Override
-    protected void channelRead0(ChannelHandlerContext ctx, Message.Request request) throws Exception {
-        log.info("收到消息 requestMsg: {}", request);
+    protected void channelRead0(ChannelHandlerContext ctx, Message.Protocol protocol) throws Exception {
+        log.info("收到消息 requestMsg: {}", protocol);
         log.info("收到消息 KEY_CONN_ID: {}", ctx.channel().attr(AppConstants.KEY_CONN_ID).get());
-        Operation op = chatOperation.find(request.getOperation());
+        Operation op = chatOperation.find(protocol.getOperation());
         if (op != null) {
-            op.action(ctx.channel(), request);
+            op.action(ctx.channel(), protocol);
             //msgService.receive(proto);
         } else {
-            log.warn("Not found operationId: " + request.getOperation());
+            log.warn("Not found operationId: " + protocol.getOperation());
         }
     }
 
@@ -84,9 +84,10 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Reque
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         log.error("异常消息", cause);
-        Message.Response response = Message.Response.newBuilder()
+        Message.Protocol response = Message.Protocol.newBuilder()
                 .setCode(AppEnum.SYSTEM_ERROR.getCode())
                 .setOperation(AppConstants.OP_MESSAGE_REPLY).build();
+
         ctx.writeAndFlush(response);
         //ctx.close();
     }

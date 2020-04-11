@@ -14,13 +14,13 @@ public final class Message {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface RequestOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:Request)
+  public interface ProtocolOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:Protocol)
       com.google.protobuf.MessageOrBuilder {
 
     /**
      * <pre>
-     *appkey 分发的(必传)
+     *appkey 分发的(必传字段)
      * </pre>
      *
      * <code>string appkey = 1;</code>
@@ -29,7 +29,7 @@ public final class Message {
     String getAppkey();
     /**
      * <pre>
-     *appkey 分发的(必传)
+     *appkey 分发的(必传字段)
      * </pre>
      *
      * <code>string appkey = 1;</code>
@@ -40,7 +40,7 @@ public final class Message {
 
     /**
      * <pre>
-     *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
+     *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传字段)
      * </pre>
      *
      * <code>uint32 operation = 2;</code>
@@ -50,7 +50,7 @@ public final class Message {
 
     /**
      * <pre>
-     *需要调用的方法operation=5时 必须传
+     *需要调用的方法operation=5,6时 (必传字段)
      * </pre>
      *
      * <code>string cmd = 3;</code>
@@ -59,7 +59,7 @@ public final class Message {
     String getCmd();
     /**
      * <pre>
-     *需要调用的方法operation=5时 必须传
+     *需要调用的方法operation=5,6时 (必传字段)
      * </pre>
      *
      * <code>string cmd = 3;</code>
@@ -70,7 +70,7 @@ public final class Message {
 
     /**
      * <pre>
-     *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
+     *token 当第一次请求 operation=1 时可以不传,
      * </pre>
      *
      * <code>string token = 4;</code>
@@ -79,7 +79,7 @@ public final class Message {
     String getToken();
     /**
      * <pre>
-     *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
+     *token 当第一次请求 operation=1 时可以不传,
      * </pre>
      *
      * <code>string token = 4;</code>
@@ -100,10 +100,30 @@ public final class Message {
 
     /**
      * <pre>
+     *消息响应码 operation=2,4,6 (必传字段)
+     * </pre>
+     *
+     * <code>string code = 6;</code>
+     * @return The code.
+     */
+    String getCode();
+    /**
+     * <pre>
+     *消息响应码 operation=2,4,6 (必传字段)
+     * </pre>
+     *
+     * <code>string code = 6;</code>
+     * @return The bytes for code.
+     */
+    com.google.protobuf.ByteString
+        getCodeBytes();
+
+    /**
+     * <pre>
      *消息内容 json字符串
      * </pre>
      *
-     * <code>string data = 6;</code>
+     * <code>string data = 7;</code>
      * @return The data.
      */
     String getData();
@@ -112,28 +132,29 @@ public final class Message {
      *消息内容 json字符串
      * </pre>
      *
-     * <code>string data = 6;</code>
+     * <code>string data = 7;</code>
      * @return The bytes for data.
      */
     com.google.protobuf.ByteString
         getDataBytes();
   }
   /**
-   * Protobuf type {@code Request}
+   * Protobuf type {@code Protocol}
    */
-  public  static final class Request extends
+  public  static final class Protocol extends
       com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:Request)
-      RequestOrBuilder {
+      // @@protoc_insertion_point(message_implements:Protocol)
+      ProtocolOrBuilder {
   private static final long serialVersionUID = 0L;
-    // Use Request.newBuilder() to construct.
-    private Request(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
+    // Use Protocol.newBuilder() to construct.
+    private Protocol(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
       super(builder);
     }
-    private Request() {
+    private Protocol() {
       appkey_ = "";
       cmd_ = "";
       token_ = "";
+      code_ = "";
       data_ = "";
     }
 
@@ -141,7 +162,7 @@ public final class Message {
     @SuppressWarnings({"unused"})
     protected Object newInstance(
         UnusedPrivateParameter unused) {
-      return new Request();
+      return new Protocol();
     }
 
     @Override
@@ -149,7 +170,7 @@ public final class Message {
     getUnknownFields() {
       return this.unknownFields;
     }
-    private Request(
+    private Protocol(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
@@ -198,6 +219,12 @@ public final class Message {
             case 50: {
               String s = input.readStringRequireUtf8();
 
+              code_ = s;
+              break;
+            }
+            case 58: {
+              String s = input.readStringRequireUtf8();
+
               data_ = s;
               break;
             }
@@ -222,22 +249,22 @@ public final class Message {
     }
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return Message.internal_static_Request_descriptor;
+      return Message.internal_static_Protocol_descriptor;
     }
 
     @Override
     protected FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return Message.internal_static_Request_fieldAccessorTable
+      return Message.internal_static_Protocol_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              Message.Request.class, Message.Request.Builder.class);
+              Message.Protocol.class, Message.Protocol.Builder.class);
     }
 
     public static final int APPKEY_FIELD_NUMBER = 1;
     private volatile Object appkey_;
     /**
      * <pre>
-     *appkey 分发的(必传)
+     *appkey 分发的(必传字段)
      * </pre>
      *
      * <code>string appkey = 1;</code>
@@ -257,7 +284,7 @@ public final class Message {
     }
     /**
      * <pre>
-     *appkey 分发的(必传)
+     *appkey 分发的(必传字段)
      * </pre>
      *
      * <code>string appkey = 1;</code>
@@ -281,7 +308,7 @@ public final class Message {
     private int operation_;
     /**
      * <pre>
-     *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
+     *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传字段)
      * </pre>
      *
      * <code>uint32 operation = 2;</code>
@@ -295,7 +322,7 @@ public final class Message {
     private volatile Object cmd_;
     /**
      * <pre>
-     *需要调用的方法operation=5时 必须传
+     *需要调用的方法operation=5,6时 (必传字段)
      * </pre>
      *
      * <code>string cmd = 3;</code>
@@ -315,7 +342,7 @@ public final class Message {
     }
     /**
      * <pre>
-     *需要调用的方法operation=5时 必须传
+     *需要调用的方法operation=5,6时 (必传字段)
      * </pre>
      *
      * <code>string cmd = 3;</code>
@@ -339,7 +366,7 @@ public final class Message {
     private volatile Object token_;
     /**
      * <pre>
-     *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
+     *token 当第一次请求 operation=1 时可以不传,
      * </pre>
      *
      * <code>string token = 4;</code>
@@ -359,7 +386,7 @@ public final class Message {
     }
     /**
      * <pre>
-     *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
+     *token 当第一次请求 operation=1 时可以不传,
      * </pre>
      *
      * <code>string token = 4;</code>
@@ -393,14 +420,58 @@ public final class Message {
       return version_;
     }
 
-    public static final int DATA_FIELD_NUMBER = 6;
+    public static final int CODE_FIELD_NUMBER = 6;
+    private volatile Object code_;
+    /**
+     * <pre>
+     *消息响应码 operation=2,4,6 (必传字段)
+     * </pre>
+     *
+     * <code>string code = 6;</code>
+     * @return The code.
+     */
+    public String getCode() {
+      Object ref = code_;
+      if (ref instanceof String) {
+        return (String) ref;
+      } else {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        String s = bs.toStringUtf8();
+        code_ = s;
+        return s;
+      }
+    }
+    /**
+     * <pre>
+     *消息响应码 operation=2,4,6 (必传字段)
+     * </pre>
+     *
+     * <code>string code = 6;</code>
+     * @return The bytes for code.
+     */
+    public com.google.protobuf.ByteString
+        getCodeBytes() {
+      Object ref = code_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b =
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (String) ref);
+        code_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int DATA_FIELD_NUMBER = 7;
     private volatile Object data_;
     /**
      * <pre>
      *消息内容 json字符串
      * </pre>
      *
-     * <code>string data = 6;</code>
+     * <code>string data = 7;</code>
      * @return The data.
      */
     public String getData() {
@@ -420,7 +491,7 @@ public final class Message {
      *消息内容 json字符串
      * </pre>
      *
-     * <code>string data = 6;</code>
+     * <code>string data = 7;</code>
      * @return The bytes for data.
      */
     public com.google.protobuf.ByteString
@@ -466,8 +537,11 @@ public final class Message {
       if (version_ != 0) {
         output.writeUInt32(5, version_);
       }
+      if (!getCodeBytes().isEmpty()) {
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, code_);
+      }
       if (!getDataBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 6, data_);
+        com.google.protobuf.GeneratedMessageV3.writeString(output, 7, data_);
       }
       unknownFields.writeTo(output);
     }
@@ -495,8 +569,11 @@ public final class Message {
         size += com.google.protobuf.CodedOutputStream
           .computeUInt32Size(5, version_);
       }
+      if (!getCodeBytes().isEmpty()) {
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, code_);
+      }
       if (!getDataBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(6, data_);
+        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(7, data_);
       }
       size += unknownFields.getSerializedSize();
       memoizedSize = size;
@@ -508,10 +585,10 @@ public final class Message {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof Message.Request)) {
+      if (!(obj instanceof Message.Protocol)) {
         return super.equals(obj);
       }
-      Message.Request other = (Message.Request) obj;
+      Message.Protocol other = (Message.Protocol) obj;
 
       if (!getAppkey()
           .equals(other.getAppkey())) return false;
@@ -523,6 +600,8 @@ public final class Message {
           .equals(other.getToken())) return false;
       if (getVersion()
           != other.getVersion()) return false;
+      if (!getCode()
+          .equals(other.getCode())) return false;
       if (!getData()
           .equals(other.getData())) return false;
       if (!unknownFields.equals(other.unknownFields)) return false;
@@ -546,6 +625,8 @@ public final class Message {
       hash = (53 * hash) + getToken().hashCode();
       hash = (37 * hash) + VERSION_FIELD_NUMBER;
       hash = (53 * hash) + getVersion();
+      hash = (37 * hash) + CODE_FIELD_NUMBER;
+      hash = (53 * hash) + getCode().hashCode();
       hash = (37 * hash) + DATA_FIELD_NUMBER;
       hash = (53 * hash) + getData().hashCode();
       hash = (29 * hash) + unknownFields.hashCode();
@@ -553,69 +634,69 @@ public final class Message {
       return hash;
     }
 
-    public static Message.Request parseFrom(
+    public static Message.Protocol parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static Message.Request parseFrom(
+    public static Message.Protocol parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Message.Request parseFrom(
+    public static Message.Protocol parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static Message.Request parseFrom(
+    public static Message.Protocol parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Message.Request parseFrom(byte[] data)
+    public static Message.Protocol parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static Message.Request parseFrom(
+    public static Message.Protocol parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static Message.Request parseFrom(java.io.InputStream input)
+    public static Message.Protocol parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static Message.Request parseFrom(
+    public static Message.Protocol parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Message.Request parseDelimitedFrom(java.io.InputStream input)
+    public static Message.Protocol parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input);
     }
-    public static Message.Request parseDelimitedFrom(
+    public static Message.Protocol parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static Message.Request parseFrom(
+    public static Message.Protocol parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessageV3
           .parseWithIOException(PARSER, input);
     }
-    public static Message.Request parseFrom(
+    public static Message.Protocol parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -628,7 +709,7 @@ public final class Message {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(Message.Request prototype) {
+    public static Builder newBuilder(Message.Protocol prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @Override
@@ -644,26 +725,26 @@ public final class Message {
       return builder;
     }
     /**
-     * Protobuf type {@code Request}
+     * Protobuf type {@code Protocol}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:Request)
-        Message.RequestOrBuilder {
+        // @@protoc_insertion_point(builder_implements:Protocol)
+        Message.ProtocolOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return Message.internal_static_Request_descriptor;
+        return Message.internal_static_Protocol_descriptor;
       }
 
       @Override
       protected FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return Message.internal_static_Request_fieldAccessorTable
+        return Message.internal_static_Protocol_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                Message.Request.class, Message.Request.Builder.class);
+                Message.Protocol.class, Message.Protocol.Builder.class);
       }
 
-      // Construct using com.lzs.chat.base.protobuf.Message.Request.newBuilder()
+      // Construct using com.lzs.chat.base.protobuf.Message.Protocol.newBuilder()
       private Builder() {
         maybeForceBuilderInitialization();
       }
@@ -691,6 +772,8 @@ public final class Message {
 
         version_ = 0;
 
+        code_ = "";
+
         data_ = "";
 
         return this;
@@ -699,17 +782,17 @@ public final class Message {
       @Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return Message.internal_static_Request_descriptor;
+        return Message.internal_static_Protocol_descriptor;
       }
 
       @Override
-      public Message.Request getDefaultInstanceForType() {
-        return Message.Request.getDefaultInstance();
+      public Message.Protocol getDefaultInstanceForType() {
+        return Message.Protocol.getDefaultInstance();
       }
 
       @Override
-      public Message.Request build() {
-        Message.Request result = buildPartial();
+      public Message.Protocol build() {
+        Message.Protocol result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -717,13 +800,14 @@ public final class Message {
       }
 
       @Override
-      public Message.Request buildPartial() {
-        Message.Request result = new Message.Request(this);
+      public Message.Protocol buildPartial() {
+        Message.Protocol result = new Message.Protocol(this);
         result.appkey_ = appkey_;
         result.operation_ = operation_;
         result.cmd_ = cmd_;
         result.token_ = token_;
         result.version_ = version_;
+        result.code_ = code_;
         result.data_ = data_;
         onBuilt();
         return result;
@@ -763,16 +847,16 @@ public final class Message {
       }
       @Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof Message.Request) {
-          return mergeFrom((Message.Request)other);
+        if (other instanceof Message.Protocol) {
+          return mergeFrom((Message.Protocol)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(Message.Request other) {
-        if (other == Message.Request.getDefaultInstance()) return this;
+      public Builder mergeFrom(Message.Protocol other) {
+        if (other == Message.Protocol.getDefaultInstance()) return this;
         if (!other.getAppkey().isEmpty()) {
           appkey_ = other.appkey_;
           onChanged();
@@ -790,6 +874,10 @@ public final class Message {
         }
         if (other.getVersion() != 0) {
           setVersion(other.getVersion());
+        }
+        if (!other.getCode().isEmpty()) {
+          code_ = other.code_;
+          onChanged();
         }
         if (!other.getData().isEmpty()) {
           data_ = other.data_;
@@ -810,11 +898,11 @@ public final class Message {
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws java.io.IOException {
-        Message.Request parsedMessage = null;
+        Message.Protocol parsedMessage = null;
         try {
           parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
         } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (Message.Request) e.getUnfinishedMessage();
+          parsedMessage = (Message.Protocol) e.getUnfinishedMessage();
           throw e.unwrapIOException();
         } finally {
           if (parsedMessage != null) {
@@ -827,7 +915,7 @@ public final class Message {
       private Object appkey_ = "";
       /**
        * <pre>
-       *appkey 分发的(必传)
+       *appkey 分发的(必传字段)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -847,7 +935,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *appkey 分发的(必传)
+       *appkey 分发的(必传字段)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -868,7 +956,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *appkey 分发的(必传)
+       *appkey 分发的(必传字段)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -887,7 +975,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *appkey 分发的(必传)
+       *appkey 分发的(必传字段)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -901,7 +989,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *appkey 分发的(必传)
+       *appkey 分发的(必传字段)
        * </pre>
        *
        * <code>string appkey = 1;</code>
@@ -923,7 +1011,7 @@ public final class Message {
       private int operation_ ;
       /**
        * <pre>
-       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
+       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传字段)
        * </pre>
        *
        * <code>uint32 operation = 2;</code>
@@ -934,7 +1022,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
+       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传字段)
        * </pre>
        *
        * <code>uint32 operation = 2;</code>
@@ -949,7 +1037,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传)
+       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6消息回复(必传字段)
        * </pre>
        *
        * <code>uint32 operation = 2;</code>
@@ -965,7 +1053,7 @@ public final class Message {
       private Object cmd_ = "";
       /**
        * <pre>
-       *需要调用的方法operation=5时 必须传
+       *需要调用的方法operation=5,6时 (必传字段)
        * </pre>
        *
        * <code>string cmd = 3;</code>
@@ -985,7 +1073,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *需要调用的方法operation=5时 必须传
+       *需要调用的方法operation=5,6时 (必传字段)
        * </pre>
        *
        * <code>string cmd = 3;</code>
@@ -1006,7 +1094,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *需要调用的方法operation=5时 必须传
+       *需要调用的方法operation=5,6时 (必传字段)
        * </pre>
        *
        * <code>string cmd = 3;</code>
@@ -1025,7 +1113,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *需要调用的方法operation=5时 必须传
+       *需要调用的方法operation=5,6时 (必传字段)
        * </pre>
        *
        * <code>string cmd = 3;</code>
@@ -1039,7 +1127,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *需要调用的方法operation=5时 必须传
+       *需要调用的方法operation=5,6时 (必传字段)
        * </pre>
        *
        * <code>string cmd = 3;</code>
@@ -1061,7 +1149,7 @@ public final class Message {
       private Object token_ = "";
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
+       *token 当第一次请求 operation=1 时可以不传,
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1081,7 +1169,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
+       *token 当第一次请求 operation=1 时可以不传,
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1102,7 +1190,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
+       *token 当第一次请求 operation=1 时可以不传,
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1121,7 +1209,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
+       *token 当第一次请求 operation=1 时可以不传,
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1135,7 +1223,7 @@ public final class Message {
       }
       /**
        * <pre>
-       *token 当第一次请求 operation=OP_AUTH 时可以不传, 5,操作必须传
+       *token 当第一次请求 operation=1 时可以不传,
        * </pre>
        *
        * <code>string token = 4;</code>
@@ -1196,22 +1284,22 @@ public final class Message {
         return this;
       }
 
-      private Object data_ = "";
+      private Object code_ = "";
       /**
        * <pre>
-       *消息内容 json字符串
+       *消息响应码 operation=2,4,6 (必传字段)
        * </pre>
        *
-       * <code>string data = 6;</code>
-       * @return The data.
+       * <code>string code = 6;</code>
+       * @return The code.
        */
-      public String getData() {
-        Object ref = data_;
+      public String getCode() {
+        Object ref = code_;
         if (!(ref instanceof String)) {
           com.google.protobuf.ByteString bs =
               (com.google.protobuf.ByteString) ref;
           String s = bs.toStringUtf8();
-          data_ = s;
+          code_ = s;
           return s;
         } else {
           return (String) ref;
@@ -1219,20 +1307,20 @@ public final class Message {
       }
       /**
        * <pre>
-       *消息内容 json字符串
+       *消息响应码 operation=2,4,6 (必传字段)
        * </pre>
        *
-       * <code>string data = 6;</code>
-       * @return The bytes for data.
+       * <code>string code = 6;</code>
+       * @return The bytes for code.
        */
       public com.google.protobuf.ByteString
-          getDataBytes() {
-        Object ref = data_;
+          getCodeBytes() {
+        Object ref = code_;
         if (ref instanceof String) {
           com.google.protobuf.ByteString b =
               com.google.protobuf.ByteString.copyFromUtf8(
                   (String) ref);
-          data_ = b;
+          code_ = b;
           return b;
         } else {
           return (com.google.protobuf.ByteString) ref;
@@ -1240,896 +1328,18 @@ public final class Message {
       }
       /**
        * <pre>
-       *消息内容 json字符串
+       *消息响应码 operation=2,4,6 (必传字段)
        * </pre>
        *
-       * <code>string data = 6;</code>
-       * @param value The data to set.
+       * <code>string code = 6;</code>
+       * @param value The code to set.
        * @return This builder for chaining.
        */
-      public Builder setData(
+      public Builder setCode(
           String value) {
         if (value == null) {
     throw new NullPointerException();
   }
-
-        data_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息内容 json字符串
-       * </pre>
-       *
-       * <code>string data = 6;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearData() {
-
-        data_ = getDefaultInstance().getData();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *消息内容 json字符串
-       * </pre>
-       *
-       * <code>string data = 6;</code>
-       * @param value The bytes for data to set.
-       * @return This builder for chaining.
-       */
-      public Builder setDataBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-
-        data_ = value;
-        onChanged();
-        return this;
-      }
-      @Override
-      public final Builder setUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.setUnknownFields(unknownFields);
-      }
-
-      @Override
-      public final Builder mergeUnknownFields(
-          final com.google.protobuf.UnknownFieldSet unknownFields) {
-        return super.mergeUnknownFields(unknownFields);
-      }
-
-
-      // @@protoc_insertion_point(builder_scope:Request)
-    }
-
-    // @@protoc_insertion_point(class_scope:Request)
-    private static final Message.Request DEFAULT_INSTANCE;
-    static {
-      DEFAULT_INSTANCE = new Message.Request();
-    }
-
-    public static Message.Request getDefaultInstance() {
-      return DEFAULT_INSTANCE;
-    }
-
-    private static final com.google.protobuf.Parser<Request>
-        PARSER = new com.google.protobuf.AbstractParser<Request>() {
-      @Override
-      public Request parsePartialFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Request(input, extensionRegistry);
-      }
-    };
-
-    public static com.google.protobuf.Parser<Request> parser() {
-      return PARSER;
-    }
-
-    @Override
-    public com.google.protobuf.Parser<Request> getParserForType() {
-      return PARSER;
-    }
-
-    @Override
-    public Message.Request getDefaultInstanceForType() {
-      return DEFAULT_INSTANCE;
-    }
-
-  }
-
-  public interface ResponseOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:Response)
-      com.google.protobuf.MessageOrBuilder {
-
-    /**
-     * <pre>
-     *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6 消息回复
-     * </pre>
-     *
-     * <code>uint32 operation = 1;</code>
-     * @return The operation.
-     */
-    int getOperation();
-
-    /**
-     * <pre>
-     *消息码 1 成功 0 失败
-     * </pre>
-     *
-     * <code>uint32 code = 2;</code>
-     * @return The code.
-     */
-    int getCode();
-
-    /**
-     * <pre>
-     * operation=2 时 返回token,其他时候不返回数据
-     * </pre>
-     *
-     * <code>string token = 3;</code>
-     * @return The token.
-     */
-    String getToken();
-    /**
-     * <pre>
-     * operation=2 时 返回token,其他时候不返回数据
-     * </pre>
-     *
-     * <code>string token = 3;</code>
-     * @return The bytes for token.
-     */
-    com.google.protobuf.ByteString
-        getTokenBytes();
-
-    /**
-     * <pre>
-     *需要调用的方法operation=6时 必须传
-     * </pre>
-     *
-     * <code>string cmd = 4;</code>
-     * @return The cmd.
-     */
-    String getCmd();
-    /**
-     * <pre>
-     *需要调用的方法operation=6时 必须传
-     * </pre>
-     *
-     * <code>string cmd = 4;</code>
-     * @return The bytes for cmd.
-     */
-    com.google.protobuf.ByteString
-        getCmdBytes();
-
-    /**
-     * <pre>
-     *消息内容 json字符串
-     * </pre>
-     *
-     * <code>string data = 5;</code>
-     * @return The data.
-     */
-    String getData();
-    /**
-     * <pre>
-     *消息内容 json字符串
-     * </pre>
-     *
-     * <code>string data = 5;</code>
-     * @return The bytes for data.
-     */
-    com.google.protobuf.ByteString
-        getDataBytes();
-  }
-  /**
-   * Protobuf type {@code Response}
-   */
-  public  static final class Response extends
-      com.google.protobuf.GeneratedMessageV3 implements
-      // @@protoc_insertion_point(message_implements:Response)
-      ResponseOrBuilder {
-  private static final long serialVersionUID = 0L;
-    // Use Response.newBuilder() to construct.
-    private Response(com.google.protobuf.GeneratedMessageV3.Builder<?> builder) {
-      super(builder);
-    }
-    private Response() {
-      token_ = "";
-      cmd_ = "";
-      data_ = "";
-    }
-
-    @Override
-    @SuppressWarnings({"unused"})
-    protected Object newInstance(
-        UnusedPrivateParameter unused) {
-      return new Response();
-    }
-
-    @Override
-    public final com.google.protobuf.UnknownFieldSet
-    getUnknownFields() {
-      return this.unknownFields;
-    }
-    private Response(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      this();
-      if (extensionRegistry == null) {
-        throw new NullPointerException();
-      }
-      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
-          com.google.protobuf.UnknownFieldSet.newBuilder();
-      try {
-        boolean done = false;
-        while (!done) {
-          int tag = input.readTag();
-          switch (tag) {
-            case 0:
-              done = true;
-              break;
-            case 8: {
-
-              operation_ = input.readUInt32();
-              break;
-            }
-            case 16: {
-
-              code_ = input.readUInt32();
-              break;
-            }
-            case 26: {
-              String s = input.readStringRequireUtf8();
-
-              token_ = s;
-              break;
-            }
-            case 34: {
-              String s = input.readStringRequireUtf8();
-
-              cmd_ = s;
-              break;
-            }
-            case 42: {
-              String s = input.readStringRequireUtf8();
-
-              data_ = s;
-              break;
-            }
-            default: {
-              if (!parseUnknownField(
-                  input, unknownFields, extensionRegistry, tag)) {
-                done = true;
-              }
-              break;
-            }
-          }
-        }
-      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-        throw e.setUnfinishedMessage(this);
-      } catch (java.io.IOException e) {
-        throw new com.google.protobuf.InvalidProtocolBufferException(
-            e).setUnfinishedMessage(this);
-      } finally {
-        this.unknownFields = unknownFields.build();
-        makeExtensionsImmutable();
-      }
-    }
-    public static final com.google.protobuf.Descriptors.Descriptor
-        getDescriptor() {
-      return Message.internal_static_Response_descriptor;
-    }
-
-    @Override
-    protected FieldAccessorTable
-        internalGetFieldAccessorTable() {
-      return Message.internal_static_Response_fieldAccessorTable
-          .ensureFieldAccessorsInitialized(
-              Message.Response.class, Message.Response.Builder.class);
-    }
-
-    public static final int OPERATION_FIELD_NUMBER = 1;
-    private int operation_;
-    /**
-     * <pre>
-     *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6 消息回复
-     * </pre>
-     *
-     * <code>uint32 operation = 1;</code>
-     * @return The operation.
-     */
-    public int getOperation() {
-      return operation_;
-    }
-
-    public static final int CODE_FIELD_NUMBER = 2;
-    private int code_;
-    /**
-     * <pre>
-     *消息码 1 成功 0 失败
-     * </pre>
-     *
-     * <code>uint32 code = 2;</code>
-     * @return The code.
-     */
-    public int getCode() {
-      return code_;
-    }
-
-    public static final int TOKEN_FIELD_NUMBER = 3;
-    private volatile Object token_;
-    /**
-     * <pre>
-     * operation=2 时 返回token,其他时候不返回数据
-     * </pre>
-     *
-     * <code>string token = 3;</code>
-     * @return The token.
-     */
-    public String getToken() {
-      Object ref = token_;
-      if (ref instanceof String) {
-        return (String) ref;
-      } else {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        token_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     * operation=2 时 返回token,其他时候不返回数据
-     * </pre>
-     *
-     * <code>string token = 3;</code>
-     * @return The bytes for token.
-     */
-    public com.google.protobuf.ByteString
-        getTokenBytes() {
-      Object ref = token_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
-        token_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int CMD_FIELD_NUMBER = 4;
-    private volatile Object cmd_;
-    /**
-     * <pre>
-     *需要调用的方法operation=6时 必须传
-     * </pre>
-     *
-     * <code>string cmd = 4;</code>
-     * @return The cmd.
-     */
-    public String getCmd() {
-      Object ref = cmd_;
-      if (ref instanceof String) {
-        return (String) ref;
-      } else {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        cmd_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *需要调用的方法operation=6时 必须传
-     * </pre>
-     *
-     * <code>string cmd = 4;</code>
-     * @return The bytes for cmd.
-     */
-    public com.google.protobuf.ByteString
-        getCmdBytes() {
-      Object ref = cmd_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
-        cmd_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    public static final int DATA_FIELD_NUMBER = 5;
-    private volatile Object data_;
-    /**
-     * <pre>
-     *消息内容 json字符串
-     * </pre>
-     *
-     * <code>string data = 5;</code>
-     * @return The data.
-     */
-    public String getData() {
-      Object ref = data_;
-      if (ref instanceof String) {
-        return (String) ref;
-      } else {
-        com.google.protobuf.ByteString bs =
-            (com.google.protobuf.ByteString) ref;
-        String s = bs.toStringUtf8();
-        data_ = s;
-        return s;
-      }
-    }
-    /**
-     * <pre>
-     *消息内容 json字符串
-     * </pre>
-     *
-     * <code>string data = 5;</code>
-     * @return The bytes for data.
-     */
-    public com.google.protobuf.ByteString
-        getDataBytes() {
-      Object ref = data_;
-      if (ref instanceof String) {
-        com.google.protobuf.ByteString b =
-            com.google.protobuf.ByteString.copyFromUtf8(
-                (String) ref);
-        data_ = b;
-        return b;
-      } else {
-        return (com.google.protobuf.ByteString) ref;
-      }
-    }
-
-    private byte memoizedIsInitialized = -1;
-    @Override
-    public final boolean isInitialized() {
-      byte isInitialized = memoizedIsInitialized;
-      if (isInitialized == 1) return true;
-      if (isInitialized == 0) return false;
-
-      memoizedIsInitialized = 1;
-      return true;
-    }
-
-    @Override
-    public void writeTo(com.google.protobuf.CodedOutputStream output)
-                        throws java.io.IOException {
-      if (operation_ != 0) {
-        output.writeUInt32(1, operation_);
-      }
-      if (code_ != 0) {
-        output.writeUInt32(2, code_);
-      }
-      if (!getTokenBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 3, token_);
-      }
-      if (!getCmdBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 4, cmd_);
-      }
-      if (!getDataBytes().isEmpty()) {
-        com.google.protobuf.GeneratedMessageV3.writeString(output, 5, data_);
-      }
-      unknownFields.writeTo(output);
-    }
-
-    @Override
-    public int getSerializedSize() {
-      int size = memoizedSize;
-      if (size != -1) return size;
-
-      size = 0;
-      if (operation_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(1, operation_);
-      }
-      if (code_ != 0) {
-        size += com.google.protobuf.CodedOutputStream
-          .computeUInt32Size(2, code_);
-      }
-      if (!getTokenBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(3, token_);
-      }
-      if (!getCmdBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(4, cmd_);
-      }
-      if (!getDataBytes().isEmpty()) {
-        size += com.google.protobuf.GeneratedMessageV3.computeStringSize(5, data_);
-      }
-      size += unknownFields.getSerializedSize();
-      memoizedSize = size;
-      return size;
-    }
-
-    @Override
-    public boolean equals(final Object obj) {
-      if (obj == this) {
-       return true;
-      }
-      if (!(obj instanceof Message.Response)) {
-        return super.equals(obj);
-      }
-      Message.Response other = (Message.Response) obj;
-
-      if (getOperation()
-          != other.getOperation()) return false;
-      if (getCode()
-          != other.getCode()) return false;
-      if (!getToken()
-          .equals(other.getToken())) return false;
-      if (!getCmd()
-          .equals(other.getCmd())) return false;
-      if (!getData()
-          .equals(other.getData())) return false;
-      if (!unknownFields.equals(other.unknownFields)) return false;
-      return true;
-    }
-
-    @Override
-    public int hashCode() {
-      if (memoizedHashCode != 0) {
-        return memoizedHashCode;
-      }
-      int hash = 41;
-      hash = (19 * hash) + getDescriptor().hashCode();
-      hash = (37 * hash) + OPERATION_FIELD_NUMBER;
-      hash = (53 * hash) + getOperation();
-      hash = (37 * hash) + CODE_FIELD_NUMBER;
-      hash = (53 * hash) + getCode();
-      hash = (37 * hash) + TOKEN_FIELD_NUMBER;
-      hash = (53 * hash) + getToken().hashCode();
-      hash = (37 * hash) + CMD_FIELD_NUMBER;
-      hash = (53 * hash) + getCmd().hashCode();
-      hash = (37 * hash) + DATA_FIELD_NUMBER;
-      hash = (53 * hash) + getData().hashCode();
-      hash = (29 * hash) + unknownFields.hashCode();
-      memoizedHashCode = hash;
-      return hash;
-    }
-
-    public static Message.Response parseFrom(
-        java.nio.ByteBuffer data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Message.Response parseFrom(
-        java.nio.ByteBuffer data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Message.Response parseFrom(
-        com.google.protobuf.ByteString data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Message.Response parseFrom(
-        com.google.protobuf.ByteString data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Message.Response parseFrom(byte[] data)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data);
-    }
-    public static Message.Response parseFrom(
-        byte[] data,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws com.google.protobuf.InvalidProtocolBufferException {
-      return PARSER.parseFrom(data, extensionRegistry);
-    }
-    public static Message.Response parseFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static Message.Response parseFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static Message.Response parseDelimitedFrom(java.io.InputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input);
-    }
-    public static Message.Response parseDelimitedFrom(
-        java.io.InputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
-    }
-    public static Message.Response parseFrom(
-        com.google.protobuf.CodedInputStream input)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input);
-    }
-    public static Message.Response parseFrom(
-        com.google.protobuf.CodedInputStream input,
-        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-        throws java.io.IOException {
-      return com.google.protobuf.GeneratedMessageV3
-          .parseWithIOException(PARSER, input, extensionRegistry);
-    }
-
-    @Override
-    public Builder newBuilderForType() { return newBuilder(); }
-    public static Builder newBuilder() {
-      return DEFAULT_INSTANCE.toBuilder();
-    }
-    public static Builder newBuilder(Message.Response prototype) {
-      return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
-    }
-    @Override
-    public Builder toBuilder() {
-      return this == DEFAULT_INSTANCE
-          ? new Builder() : new Builder().mergeFrom(this);
-    }
-
-    @Override
-    protected Builder newBuilderForType(
-        BuilderParent parent) {
-      Builder builder = new Builder(parent);
-      return builder;
-    }
-    /**
-     * Protobuf type {@code Response}
-     */
-    public static final class Builder extends
-        com.google.protobuf.GeneratedMessageV3.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:Response)
-        Message.ResponseOrBuilder {
-      public static final com.google.protobuf.Descriptors.Descriptor
-          getDescriptor() {
-        return Message.internal_static_Response_descriptor;
-      }
-
-      @Override
-      protected FieldAccessorTable
-          internalGetFieldAccessorTable() {
-        return Message.internal_static_Response_fieldAccessorTable
-            .ensureFieldAccessorsInitialized(
-                Message.Response.class, Message.Response.Builder.class);
-      }
-
-      // Construct using com.lzs.chat.base.protobuf.Message.Response.newBuilder()
-      private Builder() {
-        maybeForceBuilderInitialization();
-      }
-
-      private Builder(
-          BuilderParent parent) {
-        super(parent);
-        maybeForceBuilderInitialization();
-      }
-      private void maybeForceBuilderInitialization() {
-        if (com.google.protobuf.GeneratedMessageV3
-                .alwaysUseFieldBuilders) {
-        }
-      }
-      @Override
-      public Builder clear() {
-        super.clear();
-        operation_ = 0;
-
-        code_ = 0;
-
-        token_ = "";
-
-        cmd_ = "";
-
-        data_ = "";
-
-        return this;
-      }
-
-      @Override
-      public com.google.protobuf.Descriptors.Descriptor
-          getDescriptorForType() {
-        return Message.internal_static_Response_descriptor;
-      }
-
-      @Override
-      public Message.Response getDefaultInstanceForType() {
-        return Message.Response.getDefaultInstance();
-      }
-
-      @Override
-      public Message.Response build() {
-        Message.Response result = buildPartial();
-        if (!result.isInitialized()) {
-          throw newUninitializedMessageException(result);
-        }
-        return result;
-      }
-
-      @Override
-      public Message.Response buildPartial() {
-        Message.Response result = new Message.Response(this);
-        result.operation_ = operation_;
-        result.code_ = code_;
-        result.token_ = token_;
-        result.cmd_ = cmd_;
-        result.data_ = data_;
-        onBuilt();
-        return result;
-      }
-
-      @Override
-      public Builder clone() {
-        return super.clone();
-      }
-      @Override
-      public Builder setField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.setField(field, value);
-      }
-      @Override
-      public Builder clearField(
-          com.google.protobuf.Descriptors.FieldDescriptor field) {
-        return super.clearField(field);
-      }
-      @Override
-      public Builder clearOneof(
-          com.google.protobuf.Descriptors.OneofDescriptor oneof) {
-        return super.clearOneof(oneof);
-      }
-      @Override
-      public Builder setRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          int index, Object value) {
-        return super.setRepeatedField(field, index, value);
-      }
-      @Override
-      public Builder addRepeatedField(
-          com.google.protobuf.Descriptors.FieldDescriptor field,
-          Object value) {
-        return super.addRepeatedField(field, value);
-      }
-      @Override
-      public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof Message.Response) {
-          return mergeFrom((Message.Response)other);
-        } else {
-          super.mergeFrom(other);
-          return this;
-        }
-      }
-
-      public Builder mergeFrom(Message.Response other) {
-        if (other == Message.Response.getDefaultInstance()) return this;
-        if (other.getOperation() != 0) {
-          setOperation(other.getOperation());
-        }
-        if (other.getCode() != 0) {
-          setCode(other.getCode());
-        }
-        if (!other.getToken().isEmpty()) {
-          token_ = other.token_;
-          onChanged();
-        }
-        if (!other.getCmd().isEmpty()) {
-          cmd_ = other.cmd_;
-          onChanged();
-        }
-        if (!other.getData().isEmpty()) {
-          data_ = other.data_;
-          onChanged();
-        }
-        this.mergeUnknownFields(other.unknownFields);
-        onChanged();
-        return this;
-      }
-
-      @Override
-      public final boolean isInitialized() {
-        return true;
-      }
-
-      @Override
-      public Builder mergeFrom(
-          com.google.protobuf.CodedInputStream input,
-          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
-          throws java.io.IOException {
-        Message.Response parsedMessage = null;
-        try {
-          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
-        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
-          parsedMessage = (Message.Response) e.getUnfinishedMessage();
-          throw e.unwrapIOException();
-        } finally {
-          if (parsedMessage != null) {
-            mergeFrom(parsedMessage);
-          }
-        }
-        return this;
-      }
-
-      private int operation_ ;
-      /**
-       * <pre>
-       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6 消息回复
-       * </pre>
-       *
-       * <code>uint32 operation = 1;</code>
-       * @return The operation.
-       */
-      public int getOperation() {
-        return operation_;
-      }
-      /**
-       * <pre>
-       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6 消息回复
-       * </pre>
-       *
-       * <code>uint32 operation = 1;</code>
-       * @param value The operation to set.
-       * @return This builder for chaining.
-       */
-      public Builder setOperation(int value) {
-
-        operation_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *操作类型 1 验证请求 2 验证回复 ，3 心跳请求 4 心跳回复, 5 消息请求,6 消息回复
-       * </pre>
-       *
-       * <code>uint32 operation = 1;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearOperation() {
-
-        operation_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private int code_ ;
-      /**
-       * <pre>
-       *消息码 1 成功 0 失败
-       * </pre>
-       *
-       * <code>uint32 code = 2;</code>
-       * @return The code.
-       */
-      public int getCode() {
-        return code_;
-      }
-      /**
-       * <pre>
-       *消息码 1 成功 0 失败
-       * </pre>
-       *
-       * <code>uint32 code = 2;</code>
-       * @param value The code to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCode(int value) {
 
         code_ = value;
         onChanged();
@@ -2137,207 +1347,35 @@ public final class Message {
       }
       /**
        * <pre>
-       *消息码 1 成功 0 失败
+       *消息响应码 operation=2,4,6 (必传字段)
        * </pre>
        *
-       * <code>uint32 code = 2;</code>
+       * <code>string code = 6;</code>
        * @return This builder for chaining.
        */
       public Builder clearCode() {
 
-        code_ = 0;
-        onChanged();
-        return this;
-      }
-
-      private Object token_ = "";
-      /**
-       * <pre>
-       * operation=2 时 返回token,其他时候不返回数据
-       * </pre>
-       *
-       * <code>string token = 3;</code>
-       * @return The token.
-       */
-      public String getToken() {
-        Object ref = token_;
-        if (!(ref instanceof String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          token_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-      /**
-       * <pre>
-       * operation=2 时 返回token,其他时候不返回数据
-       * </pre>
-       *
-       * <code>string token = 3;</code>
-       * @return The bytes for token.
-       */
-      public com.google.protobuf.ByteString
-          getTokenBytes() {
-        Object ref = token_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
-          token_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       * operation=2 时 返回token,其他时候不返回数据
-       * </pre>
-       *
-       * <code>string token = 3;</code>
-       * @param value The token to set.
-       * @return This builder for chaining.
-       */
-      public Builder setToken(
-          String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-
-        token_ = value;
+        code_ = getDefaultInstance().getCode();
         onChanged();
         return this;
       }
       /**
        * <pre>
-       * operation=2 时 返回token,其他时候不返回数据
+       *消息响应码 operation=2,4,6 (必传字段)
        * </pre>
        *
-       * <code>string token = 3;</code>
+       * <code>string code = 6;</code>
+       * @param value The bytes for code to set.
        * @return This builder for chaining.
        */
-      public Builder clearToken() {
-
-        token_ = getDefaultInstance().getToken();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       * operation=2 时 返回token,其他时候不返回数据
-       * </pre>
-       *
-       * <code>string token = 3;</code>
-       * @param value The bytes for token to set.
-       * @return This builder for chaining.
-       */
-      public Builder setTokenBytes(
+      public Builder setCodeBytes(
           com.google.protobuf.ByteString value) {
         if (value == null) {
     throw new NullPointerException();
   }
   checkByteStringIsUtf8(value);
 
-        token_ = value;
-        onChanged();
-        return this;
-      }
-
-      private Object cmd_ = "";
-      /**
-       * <pre>
-       *需要调用的方法operation=6时 必须传
-       * </pre>
-       *
-       * <code>string cmd = 4;</code>
-       * @return The cmd.
-       */
-      public String getCmd() {
-        Object ref = cmd_;
-        if (!(ref instanceof String)) {
-          com.google.protobuf.ByteString bs =
-              (com.google.protobuf.ByteString) ref;
-          String s = bs.toStringUtf8();
-          cmd_ = s;
-          return s;
-        } else {
-          return (String) ref;
-        }
-      }
-      /**
-       * <pre>
-       *需要调用的方法operation=6时 必须传
-       * </pre>
-       *
-       * <code>string cmd = 4;</code>
-       * @return The bytes for cmd.
-       */
-      public com.google.protobuf.ByteString
-          getCmdBytes() {
-        Object ref = cmd_;
-        if (ref instanceof String) {
-          com.google.protobuf.ByteString b =
-              com.google.protobuf.ByteString.copyFromUtf8(
-                  (String) ref);
-          cmd_ = b;
-          return b;
-        } else {
-          return (com.google.protobuf.ByteString) ref;
-        }
-      }
-      /**
-       * <pre>
-       *需要调用的方法operation=6时 必须传
-       * </pre>
-       *
-       * <code>string cmd = 4;</code>
-       * @param value The cmd to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCmd(
-          String value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-
-        cmd_ = value;
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *需要调用的方法operation=6时 必须传
-       * </pre>
-       *
-       * <code>string cmd = 4;</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearCmd() {
-
-        cmd_ = getDefaultInstance().getCmd();
-        onChanged();
-        return this;
-      }
-      /**
-       * <pre>
-       *需要调用的方法operation=6时 必须传
-       * </pre>
-       *
-       * <code>string cmd = 4;</code>
-       * @param value The bytes for cmd to set.
-       * @return This builder for chaining.
-       */
-      public Builder setCmdBytes(
-          com.google.protobuf.ByteString value) {
-        if (value == null) {
-    throw new NullPointerException();
-  }
-  checkByteStringIsUtf8(value);
-
-        cmd_ = value;
+        code_ = value;
         onChanged();
         return this;
       }
@@ -2348,7 +1386,7 @@ public final class Message {
        *消息内容 json字符串
        * </pre>
        *
-       * <code>string data = 5;</code>
+       * <code>string data = 7;</code>
        * @return The data.
        */
       public String getData() {
@@ -2368,7 +1406,7 @@ public final class Message {
        *消息内容 json字符串
        * </pre>
        *
-       * <code>string data = 5;</code>
+       * <code>string data = 7;</code>
        * @return The bytes for data.
        */
       public com.google.protobuf.ByteString
@@ -2389,7 +1427,7 @@ public final class Message {
        *消息内容 json字符串
        * </pre>
        *
-       * <code>string data = 5;</code>
+       * <code>string data = 7;</code>
        * @param value The data to set.
        * @return This builder for chaining.
        */
@@ -2408,7 +1446,7 @@ public final class Message {
        *消息内容 json字符串
        * </pre>
        *
-       * <code>string data = 5;</code>
+       * <code>string data = 7;</code>
        * @return This builder for chaining.
        */
       public Builder clearData() {
@@ -2422,7 +1460,7 @@ public final class Message {
        *消息内容 json字符串
        * </pre>
        *
-       * <code>string data = 5;</code>
+       * <code>string data = 7;</code>
        * @param value The bytes for data to set.
        * @return This builder for chaining.
        */
@@ -2450,56 +1488,51 @@ public final class Message {
       }
 
 
-      // @@protoc_insertion_point(builder_scope:Response)
+      // @@protoc_insertion_point(builder_scope:Protocol)
     }
 
-    // @@protoc_insertion_point(class_scope:Response)
-    private static final Message.Response DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:Protocol)
+    private static final Message.Protocol DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new Message.Response();
+      DEFAULT_INSTANCE = new Message.Protocol();
     }
 
-    public static Message.Response getDefaultInstance() {
+    public static Message.Protocol getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<Response>
-        PARSER = new com.google.protobuf.AbstractParser<Response>() {
+    private static final com.google.protobuf.Parser<Protocol>
+        PARSER = new com.google.protobuf.AbstractParser<Protocol>() {
       @Override
-      public Response parsePartialFrom(
+      public Protocol parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
-        return new Response(input, extensionRegistry);
+        return new Protocol(input, extensionRegistry);
       }
     };
 
-    public static com.google.protobuf.Parser<Response> parser() {
+    public static com.google.protobuf.Parser<Protocol> parser() {
       return PARSER;
     }
 
     @Override
-    public com.google.protobuf.Parser<Response> getParserForType() {
+    public com.google.protobuf.Parser<Protocol> getParserForType() {
       return PARSER;
     }
 
     @Override
-    public Message.Response getDefaultInstanceForType() {
+    public Message.Protocol getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_Request_descriptor;
+    internal_static_Protocol_descriptor;
   private static final
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_Request_fieldAccessorTable;
-  private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_Response_descriptor;
-  private static final
-    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
-      internal_static_Response_fieldAccessorTable;
+      internal_static_Protocol_fieldAccessorTable;
 
   public static com.google.protobuf.Descriptors.FileDescriptor
       getDescriptor() {
@@ -2509,30 +1542,22 @@ public final class Message {
       descriptor;
   static {
     String[] descriptorData = {
-      "\n\rmessage.proto\"g\n\007Request\022\016\n\006appkey\030\001 \001" +
-      "(\t\022\021\n\toperation\030\002 \001(\r\022\013\n\003cmd\030\003 \001(\t\022\r\n\005to" +
-      "ken\030\004 \001(\t\022\017\n\007version\030\005 \001(\r\022\014\n\004data\030\006 \001(\t" +
-      "\"U\n\010Response\022\021\n\toperation\030\001 \001(\r\022\014\n\004code\030" +
-      "\002 \001(\r\022\r\n\005token\030\003 \001(\t\022\013\n\003cmd\030\004 \001(\t\022\014\n\004dat" +
-      "a\030\005 \001(\tB\'\n\032com.lzs.chat.base.protobufB\007M" +
-      "essageH\003b\006proto3"
+      "\n\rmessage.proto\"v\n\010Protocol\022\016\n\006appkey\030\001 " +
+      "\001(\t\022\021\n\toperation\030\002 \001(\r\022\013\n\003cmd\030\003 \001(\t\022\r\n\005t" +
+      "oken\030\004 \001(\t\022\017\n\007version\030\005 \001(\r\022\014\n\004code\030\006 \001(" +
+      "\t\022\014\n\004data\030\007 \001(\tB\'\n\032com.lzs.chat.base.pro" +
+      "tobufB\007MessageH\003b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_Request_descriptor =
+    internal_static_Protocol_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_Request_fieldAccessorTable = new
+    internal_static_Protocol_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_Request_descriptor,
-        new String[] { "Appkey", "Operation", "Cmd", "Token", "Version", "Data", });
-    internal_static_Response_descriptor =
-      getDescriptor().getMessageTypes().get(1);
-    internal_static_Response_fieldAccessorTable = new
-      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
-        internal_static_Response_descriptor,
-        new String[] { "Operation", "Code", "Token", "Cmd", "Data", });
+        internal_static_Protocol_descriptor,
+        new String[] { "Appkey", "Operation", "Cmd", "Token", "Version", "Code", "Data", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

@@ -5,6 +5,7 @@ import com.lzs.chat.base.dto.req.AuthReqDto;
 import com.lzs.chat.base.enums.AppEnum;
 import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.service.AuthService;
+import com.lzs.chat.base.util.ProtocolUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -21,7 +22,7 @@ public class AuthServiceImpl implements AuthService {
     @Value("${chat.appkey}")
     private String appkey;
     @Override
-    public Message.Response auth(Message.Request request,AuthReqDto authReq)  {
+    public Message.Protocol auth(Message.Protocol protocol,AuthReqDto authReq)  {
 
         //cacheManager.getCache(CachingConfig.ONLINE).put(req.getUid(), appkey);
         //验证appkey
@@ -32,12 +33,11 @@ public class AuthServiceImpl implements AuthService {
         //TODO
         //把链接信息放入本地缓存和redis
         //TODO
-        log.debug("auth appkey={}", request.getAppkey());
-        Message.Response.Builder respBuilder = Message.Response.newBuilder();
-        respBuilder.setOperation(AppConstants.OP_AUTH_REPLY);
-        if(!appkey.equals(request.getAppkey())){
-            respBuilder.setCode(AppEnum.SYSTEM_ERROR_APPKEY.getCode());
-            return respBuilder.build();
+        log.debug("auth appkey={}", protocol.getAppkey());
+
+        if(!appkey.equals(protocol.getAppkey())){
+            Message.Protocol resp = ProtocolUtil.buildAuthFailResponse(AppConstants.OP_AUTH_REPLY, AppEnum.SYSTEM_ERROR_APPKEY.getCode());
+            return resp;
         }
         //检查是否有房间号
         if(Objects.nonNull(authReq.getRoomId())){
@@ -46,10 +46,7 @@ public class AuthServiceImpl implements AuthService {
 
         }
         //验证用户id,生成token
-
-        respBuilder.setCode(AppConstants.SUCCESS_CODE);
-        respBuilder.setToken("abcd1234");
-        return respBuilder.build();
+        return ProtocolUtil.buildAuthSucessResponse(AppConstants.OP_AUTH_REPLY,AppConstants.SUCCESS_CODE,"abcd1234");
     }
 
 

@@ -2,6 +2,7 @@ package com.lzs.chat.base.service;
 
 
 import com.lzs.chat.base.protobuf.Message;
+import io.netty.channel.Channel;
 
 /**
  * 消息处理接口
@@ -9,10 +10,9 @@ import com.lzs.chat.base.protobuf.Message;
 public interface MsgService {
 
     /**
-     * 接收消息
-     *
-     * @param request 协议
+     * 发送消息给其他用户
+     * @param protocol 协议
      * @return 是否处理成功
      */
-    Message.Response receive(Message.Request request);
+    Message.Protocol sendMsgToOther(Message.Protocol protocol, Channel ch);
 }
