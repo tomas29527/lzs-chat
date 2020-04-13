@@ -27,8 +27,7 @@ public class ChatApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try {
             webSocketChatServer.start();
-
-            Thread.currentThread().join();
+           // Thread.currentThread().join();
         } catch (Exception e) {
             log.error("=====netty 服务启动失败====!", e);
         }

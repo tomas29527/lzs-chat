@@ -8,7 +8,6 @@ import com.lzs.chat.base.util.SnowFlake;
 import com.lzs.chat.server.ChatOperation;
 import com.lzs.chat.server.connManager.ConnManagerUtil;
 import com.lzs.chat.server.operation.Operation;
-import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 /**
  * 消息处理类
  */
-@Sharable
 @Service
 @Scope("prototype")
 @Slf4j

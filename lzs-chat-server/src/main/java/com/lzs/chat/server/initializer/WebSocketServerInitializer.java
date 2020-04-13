@@ -49,7 +49,6 @@ public class WebSocketServerInitializer extends ChannelInitializer<NioSocketChan
         // 处理 TextWebSocketFrame
         //pipeline.addLast(protoCodec);
 
-
         pipeline.addLast(serverHandler);
     }
 

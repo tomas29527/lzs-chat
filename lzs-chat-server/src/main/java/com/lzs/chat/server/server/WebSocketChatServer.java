@@ -41,8 +41,9 @@ public class WebSocketChatServer implements ChatServer {
                     .option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
 
+            //写入把服务信息写入到 zookeeper中
+            // TODO: 2020/4/12  
             log.info("Starting WebSocketChatServer... Port: " + port);
-
             channelFuture = b.bind(port).sync();
         } finally {
             Runtime.getRuntime().addShutdownHook(new Thread() {
