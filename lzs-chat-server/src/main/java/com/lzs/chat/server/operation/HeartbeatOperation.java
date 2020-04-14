@@ -22,7 +22,7 @@ public class HeartbeatOperation  extends AbstractOperation {
 
         // write heartbeat reply
         Message.Protocol.Builder respBuilder = Message.Protocol.newBuilder();
-        respBuilder.setOperation(AppConstants.OP_AUTH_REPLY);
+        respBuilder.setOperation(AppConstants.OP_HEARTBEAT_REPLY);
         respBuilder.setCode(AppConstants.SUCCESS_CODE);
 
         ch.writeAndFlush(respBuilder.build());

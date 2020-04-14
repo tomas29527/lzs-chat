@@ -1,10 +1,8 @@
 package com.lzs.chat.server.handler;
 
-import com.lzs.chat.base.bean.Client;
 import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.enums.AppEnum;
 import com.lzs.chat.base.protobuf.Message;
-import com.lzs.chat.base.util.SnowFlake;
 import com.lzs.chat.server.ChatOperation;
 import com.lzs.chat.server.connManager.ConnManagerUtil;
 import com.lzs.chat.server.operation.Operation;
@@ -26,26 +24,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Proto
     @Autowired
     private ChatOperation chatOperation;
 
-    /**
-     * 客户端连接
-     *
-     * @param ctx 上下文
-     * @throws Exception 异常
-     */
-    @Override
-    public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        log.info("客户端与服务端连接开启");
-        // 添加连接信息
-        String uniqueCode = SnowFlake.getUniqueCode();
-        //设置连接id
-        ctx.channel().attr(AppConstants.KEY_CONN_ID).set(uniqueCode);
-        //加入到连接缓存
-        Client client = Client.builder()
-                .channel(ctx.channel())
-                .createTime(System.currentTimeMillis())
-                .build();
-        ConnManagerUtil.clientPut(uniqueCode, client);
-    }
+
 
     /**
      * 客户端关闭
@@ -61,12 +40,10 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Proto
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Message.Protocol protocol) throws Exception {
-        log.info("收到消息 requestMsg: {}", protocol);
         log.info("收到消息 KEY_CONN_ID: {}", ctx.channel().attr(AppConstants.KEY_CONN_ID).get());
         Operation op = chatOperation.find(protocol.getOperation());
         if (op != null) {
             op.action(ctx.channel(), protocol);
-            //msgService.receive(proto);
         } else {
             log.warn("Not found operationId: " + protocol.getOperation());
         }

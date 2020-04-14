@@ -3,6 +3,7 @@ package com.lzs.chat.server.initializer;
 import com.lzs.chat.base.codec.WebSocketMessageDecoder;
 import com.lzs.chat.base.codec.WebSocketMessageEncoder;
 import com.lzs.chat.base.protobuf.Message;
+import com.lzs.chat.server.handler.ChatHeartBeatHandler;
 import com.lzs.chat.server.handler.ChatServerHandler;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
@@ -14,8 +15,11 @@ import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketSe
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.codec.protobuf.ProtobufVarint32LengthFieldPrepender;
 import io.netty.handler.stream.ChunkedWriteHandler;
+import io.netty.handler.timeout.IdleStateHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * WebSocket服务初始化类
@@ -25,6 +29,8 @@ public class WebSocketServerInitializer extends ChannelInitializer<NioSocketChan
 
     @Autowired
     private ChatServerHandler serverHandler;
+    @Autowired
+    private ChatHeartBeatHandler heartBeatHandler;
 
     protected void initChannel(NioSocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
@@ -46,9 +52,8 @@ public class WebSocketServerInitializer extends ChannelInitializer<NioSocketChan
         pipeline.addLast(new ProtobufDecoder(Message.Protocol.getDefaultInstance()));
         // 协议包编码
         pipeline.addLast(new WebSocketMessageEncoder());
-        // 处理 TextWebSocketFrame
-        //pipeline.addLast(protoCodec);
-
+        pipeline.addLast(new IdleStateHandler(5,0,0, TimeUnit.SECONDS));
+        pipeline.addLast(heartBeatHandler);
         pipeline.addLast(serverHandler);
     }
 
