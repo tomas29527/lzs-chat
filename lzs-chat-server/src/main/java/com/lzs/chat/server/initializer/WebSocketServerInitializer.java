@@ -53,7 +53,7 @@ public class WebSocketServerInitializer extends ChannelInitializer<NioSocketChan
         // 协议包编码
         pipeline.addLast(new WebSocketMessageEncoder());
         pipeline.addLast(new IdleStateHandler(5,0,0, TimeUnit.SECONDS));
-        pipeline.addLast(heartBeatHandler);
+        pipeline.addLast(new ChatHeartBeatHandler());
         pipeline.addLast(serverHandler);
     }
 

@@ -12,8 +12,7 @@ import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.timeout.IdleStateEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * <一句话说明功能>
@@ -24,9 +23,8 @@ import org.springframework.stereotype.Service;
  * @date 2020/4/13 16:03
  * @since <版本号>
  */
-@Service
-@Scope("prototype")
 @Slf4j
+@Component
 public class ChatHeartBeatHandler extends SimpleChannelInboundHandler<Message.Protocol> {
 
     @Autowired
