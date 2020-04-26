@@ -34,5 +34,8 @@ public class Client {
      * 连接开始时间
      */
     private long createTime;
-
+    /**
+     * ip
+     */
+    private String ip;
 }

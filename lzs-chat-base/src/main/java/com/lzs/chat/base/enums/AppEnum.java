@@ -16,6 +16,7 @@ public enum AppEnum {
     SYSTEM_ERROR("01", "系统异常"),
     SYSTEM_ERROR_APPKEY("02", "appkey不一致"),;
 
+
     private String code;
     private String msg;
 

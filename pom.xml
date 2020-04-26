@@ -10,6 +10,7 @@
     <modules>
         <module>lzs-chat-base</module>
         <module>lzs-chat-server</module>
+        <module>lzs-chat-service</module>
     </modules>
 
     <dependencyManagement>
