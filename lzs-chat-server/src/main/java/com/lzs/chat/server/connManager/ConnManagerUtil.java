@@ -1,15 +1,19 @@
 package com.lzs.chat.server.connManager;
 
-import com.google.common.collect.Maps;
 import com.lzs.chat.base.bean.Client;
 import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.protobuf.Message;
+import com.lzs.chat.base.util.Maps;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * <一句话说明功能>
@@ -25,11 +29,11 @@ public class ConnManagerUtil {
     /**
      * 所有连接对象
      */
-    private static Map<String, Client> CLIENT_MAP = Maps.newConcurrentMap();
+    private static ConcurrentMap<String, Client> CLIENT_MAP = Maps.newConcurrentMap();
     /**
      * 按照房间id存放 用户id
      */
-    private static Map<Integer, List<String>> ROOM_CONN_MAP = Maps.newConcurrentMap();
+    private static ConcurrentMap<Integer, List<String>> ROOM_CONN_MAP = Maps.newConcurrentMap();
 
     /**
      * 连接操作
@@ -77,14 +81,7 @@ public class ConnManagerUtil {
         //需要枷锁
         synchronized (ROOM_CONN_MAP) {
             if (!CollectionUtils.isEmpty(connIds)) {
-                Iterator<String> iterator = connIds.iterator();
-                while (iterator.hasNext()){
-                    String next = iterator.next();
-                    if(next.equals(connId)){
-                        iterator.remove();
-                    }
-                }
-
+                connIds.remove(connId);
                 //如果房间人数为0时，删除房间key
                 if(connIds.size()<1){
                     ROOM_CONN_MAP.remove(roomId);
@@ -135,9 +132,9 @@ public class ConnManagerUtil {
         for (String connId : connIds) {
             Client client = CLIENT_MAP.get(connId);
             if(Objects.nonNull(client)){
-                Channel channel = client.getChannel();
-                if(channel.isActive()){
-                    channel.writeAndFlush(protocol);
+                Channel ch = client.getChannel();
+                if(ch.isActive()){
+                    ch.writeAndFlush(protocol);
                 }
             }
         }
@@ -161,9 +158,9 @@ public class ConnManagerUtil {
             if(!connId.equals(conn)){
                 Client client = CLIENT_MAP.get(conn);
                 if(Objects.nonNull(client)){
-                    Channel channel = client.getChannel();
-                    if(channel.isActive()){
-                        channel.writeAndFlush(protocol);
+                    Channel ch = client.getChannel();
+                    if(ch.isActive()){
+                        ch.writeAndFlush(protocol);
                     }
                 }
             }
@@ -177,19 +174,19 @@ public class ConnManagerUtil {
 
     /**
      * 关闭连接
-     * @param channel
+     * @param ch
      */
-    public static void closeConn(Channel channel){
-        String connId = channel.attr(AppConstants.KEY_CONN_ID).get();
-        String roomId = channel.attr(AppConstants.KEY_ROOM_ID).get();
+    public static void closeConn(Channel ch){
+        String connId = ch.attr(AppConstants.KEY_CONN_ID).get();
+        String roomId = ch.attr(AppConstants.KEY_ROOM_ID).get();
         if (StringUtils.isNotBlank(connId)) {
             clientRemove(connId);
         }
         if(StringUtils.isNotBlank(roomId)){
             roomConnRemove(Integer.valueOf(roomId),connId);
         }
-        if(channel.isActive()){
-            channel.close();
+        if(ch.isActive()){
+            ch.close();
         }
     }
 }

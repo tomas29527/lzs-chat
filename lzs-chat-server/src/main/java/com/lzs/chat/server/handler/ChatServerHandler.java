@@ -7,6 +7,7 @@ import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.util.SnowFlake;
 import com.lzs.chat.server.ChatOperation;
 import com.lzs.chat.server.connManager.ConnManagerUtil;
+import com.lzs.chat.server.exception.ChatException;
 import com.lzs.chat.server.exception.Signal;
 import com.lzs.chat.server.operation.Operation;
 import io.netty.channel.Channel;
@@ -61,13 +62,13 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Proto
      */
     @Override
     public void channelInactive(ChannelHandlerContext ctx) throws Exception {
-        log.info("客户端与服务端连接关闭");
+        log.info("客户端connid: {} 与服务端连接关闭",ctx.channel().attr(AppConstants.KEY_CONN_ID).get());
         ConnManagerUtil.closeConn(ctx.channel());
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Message.Protocol protocol) throws Exception {
-        log.info("收到消息 KEY_CONN_ID: {}", ctx.channel().attr(AppConstants.KEY_CONN_ID).get());
+        log.info("收到消息 KEY_CONN_ID: {}  Operation:{}", ctx.channel().attr(AppConstants.KEY_CONN_ID).get(),protocol.getOperation());
         Operation op = chatOperation.find(protocol.getOperation());
         if (op != null) {
             op.action(ctx.channel(), protocol);
@@ -87,7 +88,10 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Proto
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
         Channel ch = ctx.channel();
         if(cause instanceof Signal){
-            log.error("force to close channel: {} An I/O exception was caught:",ch, cause);
+            log.error("force to close channel: {} An Signal exception was caught:",ch, cause);
+            ch.close();
+        }else if(cause instanceof ChatException){
+            log.error("force to close channel: {} An ChatException exception was caught:",ch, cause);
             ch.close();
         }
         else  if (cause instanceof IOException) {

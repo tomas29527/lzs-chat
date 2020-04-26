@@ -37,8 +37,11 @@ public class WebSocketChatServer implements ChatServer {
             ServerBootstrap b = new ServerBootstrap()
                     .group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
-                    .childHandler(serverInitializer)
+                    //配置TCP参数，握手字符串长度设置
                     .option(ChannelOption.SO_BACKLOG, 128)
+                    //TCP_NODELAY算法，尽可能发送大块数据，减少充斥的小块数据
+                    .option(ChannelOption.TCP_NODELAY, true)
+                    .childHandler(serverInitializer)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
 
             //写入把服务信息写入到 zookeeper中

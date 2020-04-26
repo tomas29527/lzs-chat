@@ -21,10 +21,5 @@ public class HeartbeatOperation  extends AbstractOperation {
         //验证消息
 
         // write heartbeat reply
-        Message.Protocol.Builder respBuilder = Message.Protocol.newBuilder();
-        respBuilder.setOperation(AppConstants.OP_HEARTBEAT_REPLY);
-        respBuilder.setCode(AppConstants.SUCCESS_CODE);
-
-        ch.writeAndFlush(respBuilder.build());
     }
 }

@@ -15,9 +15,12 @@ import java.util.concurrent.TimeUnit;
  * @since <版本号>
  */
 public class ThreadUtil {
+    public static final   int corePoolsize=2;
+    public static final   int maximumPoolSize=10;
+    public static final   int max_capacity=100;
 
-    private final static ExecutorService pool = new ThreadPoolExecutor(1, 5, 0, TimeUnit.MILLISECONDS,
-            new ArrayBlockingQueue<Runnable>(20), new NamedThreadFactory("lzs-thread-util"),
+    private final static ExecutorService pool = new ThreadPoolExecutor(corePoolsize, maximumPoolSize, 120L, TimeUnit.MILLISECONDS,
+            new ArrayBlockingQueue<Runnable>(max_capacity), new NamedThreadFactory("lzs-thread-util"),
             new ThreadPoolExecutor.DiscardOldestPolicy());
 
 

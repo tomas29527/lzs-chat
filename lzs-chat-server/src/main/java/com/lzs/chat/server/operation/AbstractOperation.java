@@ -1,6 +1,7 @@
 package com.lzs.chat.server.operation;
 
 import com.lzs.chat.base.constans.AppConstants;
+import com.lzs.chat.server.exception.AuthFailException;
 import io.netty.channel.Channel;
 
 /**
@@ -16,4 +17,15 @@ public abstract class AbstractOperation implements Operation {
         ch.attr(AppConstants.KEY_CONN_ID).set(key);
     }
 
+    /**
+     * appkey 验证
+     * @param clienToken
+     * @param platformKey
+     * @return
+     */
+    protected void authToken(String clienToken, String platformKey) throws AuthFailException {
+        if (!platformKey.equals(clienToken)) {
+            throw new AuthFailException();
+        }
+    }
 }

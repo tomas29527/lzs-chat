@@ -61,13 +61,13 @@
                         // 授权成功
                         if(resp.code == 1){
                             console.log("授权成功=====");
-
+                            heartbeat();
+                            heartbeatInterval = setInterval(heartbeat, 20 * 1000);
                         }else {
                             console.log("授权失败=====");
 
                         }
-                        //heartbeat();
-                        //heartbeatInterval = setInterval(heartbeat, 30 * 1000);
+
                     break;
                     case opHeartbeatReply:
                         // 心跳
@@ -100,26 +100,30 @@
             }
 
             function heartbeat() {
-                var headerBuf = new ArrayBuffer(rawHeaderLen);
-                var headerView = new DataView(headerBuf, 0);
-                headerView.setInt32(packetOffset, rawHeaderLen);
-                headerView.setInt16(headerOffset, rawHeaderLen);
-                headerView.setInt16(verOffset, 1);
-                headerView.setInt32(opOffset, opHeartbeat);
-                headerView.setInt32(seqOffset, 1);
-                ws.send(headerBuf);
+                // var headerBuf = new ArrayBuffer(rawHeaderLen);
+                // var headerView = new DataView(headerBuf, 0);
+                // headerView.setInt32(packetOffset, rawHeaderLen);
+                // headerView.setInt16(headerOffset, rawHeaderLen);
+                // headerView.setInt16(verOffset, 1);
+                // headerView.setInt32(opOffset, opHeartbeat);
+                // headerView.setInt32(seqOffset, 1);
+                var headerBuf =new Protocol()
+                headerBuf.appkey = "1233";
+                headerBuf.operation = 3;
+                headerBuf.version = 1;
+                ws.send(headerBuf.toArrayBuffer());
             }
 
             function auth() {
                 //var authReq = new AuthReq();
-                var req =new Protocol()
-                req.appkey = "1233";
-                req.operation = 1;
-                req.version = 1;
+                var authReq =new Protocol()
+                authReq.appkey = "1233";
+                authReq.operation = 1;
+                authReq.version = 1;
                 var userId = $("#user_id").val()
                 var roomId =$("#room_id").val()
                 var jsonObj = "{\"userId\":"+userId+",\"roomId\":"+roomId+"}";
-                req.data=jsonObj;
+                authReq.data=jsonObj;
                 // var headerBuf = new ArrayBuffer(rawHeaderLen);
                 // var headerView = new DataView(headerBuf, 0);
                 // var bodyBuf = authReq.toArrayBuffer()
@@ -130,7 +134,7 @@
                 // headerView.setInt32(seqOffset, 1);
 
                 //ws.send(mergeArrayBuffer(headerBuf, bodyBuf));
-                ws.send(req.toArrayBuffer());
+                ws.send(authReq.toArrayBuffer());
             }
 
             function recevice(body) {
@@ -143,17 +147,17 @@
             var userId = $("#user_id").val()
             var roomId =$("#room_id").val()
             var msg =$("#send_msg").val();
-            var req =new Protocol()
-            req.appkey = "1233";
-            req.operation = 5;
-            req.version = 1;
-            req.cmd="user_send_msg_cmd";
-            req.token="abcd1234"
+            var sendmsg =new Protocol()
+            sendmsg.appkey = "1233";
+            sendmsg.operation = 5;
+            sendmsg.version = 1;
+            sendmsg.cmd="user_send_msg_cmd";
+            sendmsg.token="abcd1234"
 
             var msgData ="{\"msg\":\""+msg+"\",\"roomId\":"+roomId+",\"userId\":"+userId+"}";
             console.log("==========msgData:"+msgData);
-            req.data=msgData;
-            ws.send(req.toArrayBuffer());
+            sendmsg.data=msgData;
+            ws.send(sendmsg.toArrayBuffer());
             $("#content").append($("#send_msg").val())
             $("#send_msg").val("")
         }

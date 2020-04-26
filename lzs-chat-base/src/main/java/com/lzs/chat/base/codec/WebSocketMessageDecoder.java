@@ -38,6 +38,7 @@ public class WebSocketMessageDecoder extends MessageToMessageDecoder<WebSocketFr
             ByteBuf bytebuf = Unpooled.buffer();
             bytebuf.writeBytes(by);
             out.add(bytebuf);
+            bytebuf.retain();
         } else if (frame instanceof PingWebSocketFrame){
             log.warn("====其他消息需要处理======");
         }
