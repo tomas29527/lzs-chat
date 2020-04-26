@@ -1,30 +1,57 @@
 package com.lzs.chat.server.handler;
 
+import com.lzs.chat.base.bean.Client;
 import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.enums.AppEnum;
 import com.lzs.chat.base.protobuf.Message;
+import com.lzs.chat.base.util.SnowFlake;
 import com.lzs.chat.server.ChatOperation;
 import com.lzs.chat.server.connManager.ConnManagerUtil;
+import com.lzs.chat.server.exception.Signal;
 import com.lzs.chat.server.operation.Operation;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import io.netty.handler.codec.DecoderException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
+
+import java.io.IOException;
 
 /**
  * 消息处理类
  */
-@Service
-@Scope("prototype")
 @Slf4j
+@Component
+@ChannelHandler.Sharable
 public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Protocol> {
-
     @Autowired
     private ChatOperation chatOperation;
 
-
+    /**
+     * 客户端连接
+     *
+     * @param ctx 上下文
+     * @throws Exception 异常
+     */
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        log.info("==========客户端与服务端连接开启==========");
+        // 添加连接信息
+        String uniqueCode = SnowFlake.getUniqueCode();
+        //设置连接id
+        Channel ch = ctx.channel();
+        ch.attr(AppConstants.KEY_CONN_ID).set(uniqueCode);
+        //加入到连接缓存
+        Client client = Client.builder()
+                .channel(ch)
+                .createTime(System.currentTimeMillis())
+                .ip(ch.remoteAddress().toString())
+                .build();
+        ConnManagerUtil.clientPut(uniqueCode, client);
+    }
 
     /**
      * 客户端关闭
@@ -58,12 +85,25 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Proto
      */
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-        log.error("异常消息", cause);
-        Message.Protocol response = Message.Protocol.newBuilder()
-                .setCode(AppEnum.SYSTEM_ERROR.getCode())
-                .setOperation(AppConstants.OP_MESSAGE_REPLY).build();
+        Channel ch = ctx.channel();
+        if(cause instanceof Signal){
+            log.error("force to close channel: {} An I/O exception was caught:",ch, cause);
+            ch.close();
+        }
+        else  if (cause instanceof IOException) {
+            log.error("force to close channel: {} An I/O exception was caught:",ch, cause);
+            ch.close();
+        } else if (cause instanceof DecoderException) {
+            log.error("force to close channel: {} Decoder exception was caught: ", ch,cause);
+            ch.close();
+        }else {
+            log.error("channel: {} Unexpected exception was caught:",ch, cause);
+            Message.Protocol response = Message.Protocol.newBuilder()
+                    .setCode(AppEnum.SYSTEM_ERROR.getCode())
+                    .setOperation(AppConstants.OP_MESSAGE_REPLY).build();
+            ch.writeAndFlush(response);
+        }
 
-        ctx.writeAndFlush(response);
         //ctx.close();
     }
 

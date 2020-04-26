@@ -84,10 +84,11 @@ public class ConnManagerUtil {
                         iterator.remove();
                     }
                 }
-            }
-            //如果房间人数为0时，删除房间key
-            if(connIds.size()<1){
-                ROOM_CONN_MAP.remove(roomId);
+
+                //如果房间人数为0时，删除房间key
+                if(connIds.size()<1){
+                    ROOM_CONN_MAP.remove(roomId);
+                }
             }
         }
         long newtime=System.currentTimeMillis();

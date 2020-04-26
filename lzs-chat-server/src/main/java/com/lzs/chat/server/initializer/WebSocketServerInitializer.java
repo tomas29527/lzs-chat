@@ -26,12 +26,10 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class WebSocketServerInitializer extends ChannelInitializer<NioSocketChannel> {
-
-    @Autowired
-    private ChatServerHandler serverHandler;
     @Autowired
     private ChatHeartBeatHandler heartBeatHandler;
-
+    @Autowired
+    private ChatServerHandler chatServerHandler;
     protected void initChannel(NioSocketChannel ch) throws Exception {
         ChannelPipeline pipeline = ch.pipeline();
         // 编解码 http 请求
@@ -52,9 +50,9 @@ public class WebSocketServerInitializer extends ChannelInitializer<NioSocketChan
         pipeline.addLast(new ProtobufDecoder(Message.Protocol.getDefaultInstance()));
         // 协议包编码
         pipeline.addLast(new WebSocketMessageEncoder());
-        pipeline.addLast(new IdleStateHandler(5,0,0, TimeUnit.SECONDS));
-        pipeline.addLast(new ChatHeartBeatHandler());
-        pipeline.addLast(serverHandler);
+        pipeline.addLast(new IdleStateHandler(20,0,0, TimeUnit.SECONDS));
+        pipeline.addLast(heartBeatHandler);
+        pipeline.addLast(chatServerHandler);
     }
 
 }

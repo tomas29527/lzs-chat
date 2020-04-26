@@ -43,7 +43,6 @@ public class AuthOperation extends AbstractOperation {
                     ch.attr(AppConstants.KEY_ROOM_ID).set(String.valueOf(authReq.getRoomId()));
                 }
                 ConnManagerUtil.roomConnPut(authReq.getRoomId(),getKey(ch));
-
                 //新用户加入直播间 通知大家
                 Message.Protocol onlienProto = ProtocolUtil.buildUserOnlienMsg(AppConstants.OP_MESSAGE, CmdConstants.USER_ONLINE_CMD, authReq.getUserId());
                 ConnManagerUtil.sendMsgToRoomOtherConn(authReq.getRoomId(),
