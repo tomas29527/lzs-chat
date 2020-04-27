@@ -1,6 +1,5 @@
 package com.lzs.chat.base.dto.req;
 
-import com.sun.deploy.ui.AppInfo;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.Digits;
@@ -39,12 +38,6 @@ public class BaseRequest implements Serializable {
     @ApiModelProperty(value = "令牌", name = "token")
     private String token;
 
-    /**
-     * 应用信息
-     */
-    @ApiModelProperty(value = "应用信息", name = "appInfo")
-    private AppInfo appInfo;
-
     public Long getCtime() {
         return ctime;
     }
@@ -77,13 +70,6 @@ public class BaseRequest implements Serializable {
         this.token = token;
     }
 
-    public AppInfo getAppInfo() {
-        return appInfo;
-    }
-
-    public void setAppInfo(AppInfo appInfo) {
-        this.appInfo = appInfo;
-    }
 
     @Override
     public String toString() {
@@ -92,7 +78,6 @@ public class BaseRequest implements Serializable {
                 ", cip='" + cip + '\'' +
                 ", uid=" + uid +
                 ", token='" + token + '\'' +
-                ", appInfo=" + appInfo +
                 '}';
     }
 }
