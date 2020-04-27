@@ -1,5 +1,6 @@
-package com.lzs.chat.service.service;
+package com.lzs.chat.service.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.lzs.chat.service.entity.RoomInfo;
 
 /**
@@ -8,10 +9,8 @@ import com.lzs.chat.service.entity.RoomInfo;
  *
  * @author fugui
  * @title <一句话说明功能>
- * @date 2020/4/26 21:49
+ * @date 2020/4/27 11:24
  * @since <版本号>
  */
-public interface RoomInfoService {
-
-    public RoomInfo getRoomInfoById(Integer roomId);
+public interface RoomInfoMapper extends BaseMapper<RoomInfo> {
 }

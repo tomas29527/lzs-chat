@@ -4,8 +4,6 @@ option java_package = "com.lzs.chat.base.protobuf";
 option java_outer_classname = "Message";
 option optimize_for = LITE_RUNTIME;
 
-
-
 message Protocol {
     //appkey 分发的(必传字段)
     string appkey = 1;
@@ -17,7 +15,7 @@ message Protocol {
     string token = 4;
     //接口版本号 初始为1
     uint32 version = 5;
-    //消息响应码 operation=2,4,6 (必传字段)
+    //消息响应码 operation=2,6 (必传字段)
     string code =6;
     //消息内容 json字符串
     string data = 7;

@@ -5,7 +5,7 @@ import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.constans.CmdConstants;
 import com.lzs.chat.base.dto.req.SendMsgReqDto;
 import com.lzs.chat.base.protobuf.Message;
-import com.lzs.chat.base.service.MsgService;
+import com.lzs.chat.server.service.MsgService;
 import com.lzs.chat.base.util.ProtocolUtil;
 import com.lzs.chat.server.connManager.ConnManagerUtil;
 import io.netty.channel.Channel;

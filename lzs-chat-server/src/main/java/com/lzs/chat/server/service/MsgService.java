@@ -1,4 +1,4 @@
-package com.lzs.chat.base.service;
+package com.lzs.chat.server.service;
 
 
 import com.lzs.chat.base.protobuf.Message;

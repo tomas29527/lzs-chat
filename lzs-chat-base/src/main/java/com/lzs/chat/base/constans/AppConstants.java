@@ -19,5 +19,6 @@ public class AppConstants {
     //消息
     public static final int OP_MESSAGE = 5;
     public static final int OP_MESSAGE_REPLY = 6;
-
+    //jwt
+    public static final String JWT_EXPIRED="-1";
 }

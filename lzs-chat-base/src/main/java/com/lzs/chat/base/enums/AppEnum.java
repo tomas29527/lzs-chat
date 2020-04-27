@@ -14,9 +14,9 @@ public enum AppEnum {
      * 错误码从 01 开始 不要乱定义
      */
     SYSTEM_ERROR("01", "系统异常"),
-    SYSTEM_ERROR_APPKEY("02", "appkey不一致"),;
-
-
+    SYSTEM_ERROR_APPKEY("02", "appkey不一致"),
+    SYSTEM_ROOMID_ERROR("03", "房间号错误"),
+    SYSTEM_USERID_ERROR("04", "用户id不存在"),;
     private String code;
     private String msg;
 

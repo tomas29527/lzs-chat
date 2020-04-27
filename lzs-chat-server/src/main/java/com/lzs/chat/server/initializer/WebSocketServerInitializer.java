@@ -11,7 +11,6 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.HttpServerCodec;
 import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
-import io.netty.handler.codec.http.websocketx.extensions.compression.WebSocketServerCompressionHandler;
 import io.netty.handler.codec.protobuf.ProtobufDecoder;
 import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.timeout.IdleStateHandler;
@@ -39,7 +38,7 @@ public class WebSocketServerInitializer extends ChannelInitializer<NioSocketChan
         pipeline.addLast("aggregator",new HttpObjectAggregator(64 * 1024));
         // 写文件内容
       //  pipeline.addLast("http-chunked",new ChunkedWriteHandler());
-        pipeline.addLast(new WebSocketServerCompressionHandler());
+       // pipeline.addLast(new WebSocketServerCompressionHandler());
         //Netty支持websocket
         pipeline.addLast(new WebSocketServerProtocolHandler("/chat", null, true));
         //websocket消息帧处理看下面代码(这里需要把前台的消息分类，判断传过来的是websocket哪个帧，如果为二进制帧往下传值，让protobuf解码)

@@ -2,17 +2,23 @@ package com.lzs.chat.server;
 
 import com.lzs.chat.server.server.ChatServer;
 import lombok.extern.slf4j.Slf4j;
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
 import javax.annotation.Resource;
+
 
 /**
  * 程序入口
  */
+
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+@MapperScan("com.lzs.chat.service.mapper")
+@ComponentScan({"com.lzs.chat"})
 @Slf4j
 public class ChatApplication implements CommandLineRunner {
     @Resource(name = "webSocketChatServer")
@@ -27,7 +33,7 @@ public class ChatApplication implements CommandLineRunner {
     public void run(String... args) throws Exception {
         try {
             webSocketChatServer.start();
-           // Thread.currentThread().join();
+            // Thread.currentThread().join();
         } catch (Exception e) {
             log.error("=====netty 服务启动失败====!", e);
         }

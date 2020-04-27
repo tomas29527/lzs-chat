@@ -23,8 +23,9 @@
             <!-- 此处设置字符集 -->
         </encoder>
     </appender>
-    <root level="INFO">
+    <root level="DEBUG">
         <appender-ref ref="STDOUT"/>
+        <appender-ref ref="baselog"/>
     </root>
    <!-- <logger name="com.ims.game.record" level="INFO">
         <appender-ref ref="baselog"/>

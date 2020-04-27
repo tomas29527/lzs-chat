@@ -68,7 +68,7 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Proto
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, Message.Protocol protocol) throws Exception {
-        log.info("收到消息 KEY_CONN_ID: {}  Operation:{}", ctx.channel().attr(AppConstants.KEY_CONN_ID).get(),protocol.getOperation());
+        log.info("收到消息 KEY_CONN_ID: {}  protocol:{}", ctx.channel().attr(AppConstants.KEY_CONN_ID).get(),protocol);
         Operation op = chatOperation.find(protocol.getOperation());
         if (op != null) {
             op.action(ctx.channel(), protocol);

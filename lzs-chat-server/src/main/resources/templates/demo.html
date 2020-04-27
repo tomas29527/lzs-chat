@@ -29,6 +29,7 @@
         const rawHeaderLen = 16;
         const packetOffset = 0, headerOffset = 4, verOffset = 6, opOffset = 8, seqOffset = 12;
         const opAuth = 1, opAuthReply=2, opHeartbeat=3, opHeartbeatReply=4, opMessage=5, opMessageReply=6;
+        var token=""
         var heartbeatInterval;
         var ws
 
@@ -61,6 +62,7 @@
                         // 授权成功
                         if(resp.code == 1){
                             console.log("授权成功=====");
+                            token=resp.token
                             heartbeat();
                             heartbeatInterval = setInterval(heartbeat, 20 * 1000);
                         }else {
@@ -75,7 +77,8 @@
                     break;
                     case opMessage:
                         if(resp.cmd=="user_online_cmd"){
-                            $("#content").append("<li>欢迎["+resp.data+"]进入聊天室</li>")
+                            var jsonObj = JSON.parse(resp.data);
+                            $("#content").append("<li>欢迎["+jsonObj.nickName+"]进入聊天室</li>")
                         }else if(resp.cmd="user_send_msg_cmd"){
                             $("#content").append("<li>"+resp.data+"</li>")
                         }
@@ -111,6 +114,7 @@
                 headerBuf.appkey = "1233";
                 headerBuf.operation = 3;
                 headerBuf.version = 1;
+                headerBuf.token=token
                 ws.send(headerBuf.toArrayBuffer());
             }
 
@@ -152,7 +156,7 @@
             sendmsg.operation = 5;
             sendmsg.version = 1;
             sendmsg.cmd="user_send_msg_cmd";
-            sendmsg.token="abcd1234"
+            sendmsg.token=token
 
             var msgData ="{\"msg\":\""+msg+"\",\"roomId\":"+roomId+",\"userId\":"+userId+"}";
             console.log("==========msgData:"+msgData);

@@ -15,7 +15,6 @@ server:
   connection-timeout: 5000
 
 mybatis-plus:
-  #
   mapper-locations: classpath*:mapper/**/*Mapper.xml
   typeAliasesPackage: com.lzs
   global-config:
