@@ -1,13 +1,13 @@
-package com.lzs.chat.server.service.impl;
+package com.lzs.chat.service.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.constans.CmdConstants;
 import com.lzs.chat.base.dto.req.SendMsgReqDto;
 import com.lzs.chat.base.protobuf.Message;
-import com.lzs.chat.server.service.MsgService;
+import com.lzs.chat.service.service.MsgService;
 import com.lzs.chat.base.util.ProtocolUtil;
-import com.lzs.chat.server.connManager.ConnManagerUtil;
+import com.lzs.chat.base.connManager.ConnManagerUtil;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

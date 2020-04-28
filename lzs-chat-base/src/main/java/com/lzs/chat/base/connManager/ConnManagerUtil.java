@@ -1,4 +1,4 @@
-package com.lzs.chat.server.connManager;
+package com.lzs.chat.base.connManager;
 
 import com.lzs.chat.base.bean.Client;
 import com.lzs.chat.base.constans.AppConstants;

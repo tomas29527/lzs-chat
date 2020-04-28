@@ -1,4 +1,4 @@
-package com.lzs.chat.server.service.impl;
+package com.lzs.chat.service.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.lzs.chat.base.constans.AppConstants;
@@ -9,8 +9,8 @@ import com.lzs.chat.base.enums.AppEnum;
 import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.util.JWTUtil;
 import com.lzs.chat.base.util.ProtocolUtil;
-import com.lzs.chat.server.connManager.ConnManagerUtil;
-import com.lzs.chat.server.service.AuthService;
+import com.lzs.chat.base.connManager.ConnManagerUtil;
+import com.lzs.chat.service.service.AuthService;
 import com.lzs.chat.service.entity.RoomInfo;
 import com.lzs.chat.service.entity.User;
 import com.lzs.chat.service.service.RoomInfoService;

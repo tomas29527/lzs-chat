@@ -1,7 +1,7 @@
 package com.lzs.chat.server.handler;
 
 import com.lzs.chat.base.constans.AppConstants;
-import com.lzs.chat.server.exception.Signal;
+import com.lzs.chat.base.exception.Signal;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;

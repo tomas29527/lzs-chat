@@ -4,7 +4,7 @@ import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.constans.CmdConstants;
 import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.util.Reflects;
-import com.lzs.chat.server.service.MsgService;
+import com.lzs.chat.service.service.MsgService;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;

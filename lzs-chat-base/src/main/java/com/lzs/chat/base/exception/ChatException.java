@@ -1,4 +1,4 @@
-package com.lzs.chat.server.exception;
+package com.lzs.chat.base.exception;
 
 /**
  * 聊天异常类

@@ -4,7 +4,7 @@ import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.dto.req.AuthReqDto;
 import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.util.ThreadUtil;
-import com.lzs.chat.server.service.AuthService;
+import com.lzs.chat.service.service.AuthService;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
