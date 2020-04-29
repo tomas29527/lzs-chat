@@ -41,11 +41,6 @@ public abstract class AbstractOperation implements Operation {
                 log.error("====认证的参数错误,消息为空==== protocol:{}", protocol);
                 throw new ParamErroException();
             }
-            Integer roomId = authReq.getRoomId();
-            if (Objects.isNull(roomId)) {
-                log.error("====认证的参数错误,房间id不能为空==== protocol:{}", protocol);
-                throw new ParamErroException();
-            }
             return authReq;
         } catch (Exception e) {
             log.error("====认证的参数异常,消息为空==== protocol:{} error:", protocol, e);

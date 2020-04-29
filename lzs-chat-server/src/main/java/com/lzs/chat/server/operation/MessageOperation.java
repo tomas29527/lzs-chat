@@ -4,6 +4,7 @@ import com.lzs.chat.base.constans.AppConstants;
 import com.lzs.chat.base.constans.CmdConstants;
 import com.lzs.chat.base.protobuf.Message;
 import com.lzs.chat.base.util.Reflects;
+import com.lzs.chat.base.util.ThreadUtil;
 import com.lzs.chat.service.service.MsgService;
 import io.netty.channel.Channel;
 import lombok.extern.slf4j.Slf4j;
@@ -40,12 +41,17 @@ public class MessageOperation extends AbstractOperation {
             case 5:
                 log.info("收到客户端发送来的消息");
                 //发送消息给其他用户
-                Class clz = msgService.getClass();
                 String methodName = CmdConstants.CMD_METHOD_MAP.get(cmd);
                 if(StringUtils.isNotBlank(methodName)){
-                    Class<?>[] parameterTypes = new Class<?>[]{Message.Protocol.class, Channel.class};
-                    Object[] args = new Object[]{protocol, ch};
-                    Reflects.fastInvoke(msgService, methodName, parameterTypes, args);
+                    ThreadUtil.submit(()->{
+                        try {
+                            Class<?>[] parameterTypes = new Class<?>[]{Message.Protocol.class, Channel.class};
+                            Object[] args = new Object[]{protocol, ch};
+                            Reflects.fastInvoke(msgService, methodName, parameterTypes, args);
+                        }catch (Exception  e){
+                            log.error("====消息处理异常== methodName:{} error:",methodName,e);
+                        }
+                    });
                 }else {
                     log.error("========cmd 参数错误========");
                     //关闭连接

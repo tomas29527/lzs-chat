@@ -16,7 +16,12 @@ public enum AppEnum {
     SYSTEM_ERROR("01", "系统异常"),
     SYSTEM_ERROR_APPKEY("02", "appkey不一致"),
     SYSTEM_ROOMID_ERROR("03", "房间号错误"),
-    SYSTEM_USERID_ERROR("04", "用户id不存在"),;
+    SYSTEM_USERID_ERROR("04", "用户id不存在"),
+    /**
+     * 消息错误码
+     */
+    MESSAGE_USER_SEND_ERROR("001", "未加入房间"),;
+
     private String code;
     private String msg;
 

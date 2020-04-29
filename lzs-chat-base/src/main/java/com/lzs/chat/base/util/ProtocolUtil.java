@@ -40,6 +40,21 @@ public class ProtocolUtil {
     }
 
     /**
+     * 创建消息处理的回复消息
+     * @param operation
+     * @param code
+     * @param cmd
+     * @return
+     */
+    public static Message.Protocol buildResponse(int operation,String code,String cmd){
+        return Message.Protocol.newBuilder()
+                .setOperation(operation)
+                .setCode(code)
+                .setCmd(cmd)
+                .build();
+    }
+
+    /**
      * 创建用户线上消息
      * @param operation
      * @param cmd

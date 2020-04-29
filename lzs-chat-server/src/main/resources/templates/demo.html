@@ -14,6 +14,7 @@
     <input id="user_id" type="hidden" th:value="${userId}">
     <input id="room_id" type="hidden" th:value="${roomId}">
     <input id="send_msg" type="text" >
+    <input id="joinButton" type="button" value="先加入房间" >
     <input id="sendButton" type="button" value="发送" >
     <div style="height: 400px;width: 400px; background: bisque">
         <p>聊天内容:</p>
@@ -67,9 +68,7 @@
                             heartbeatInterval = setInterval(heartbeat, 20 * 1000);
                         }else {
                             console.log("授权失败=====");
-
                         }
-
                     break;
                     case opHeartbeatReply:
                         // 心跳
@@ -79,7 +78,8 @@
                         if(resp.cmd=="user_online_cmd"){
                             var jsonObj = JSON.parse(resp.data);
                             $("#content").append("<li>欢迎["+jsonObj.nickName+"]进入聊天室</li>")
-                        }else if(resp.cmd="user_send_msg_cmd"){
+                        }
+                        else if(resp.cmd="user_send_msg_cmd"){
                             $("#content").append("<li>"+resp.data+"</li>")
                         }
 
@@ -87,7 +87,9 @@
                     case opMessageReply:
                         // 消息
                         if(resp.code == 1){
-
+                            if(resp.cmd=="user_join_room_cmd"){
+                                console.log("加入房间成功");
+                            }
 
                         }
                     break;
@@ -126,7 +128,7 @@
                 authReq.version = 1;
                 var userId = $("#user_id").val()
                 var roomId =$("#room_id").val()
-                var jsonObj = "{\"userId\":"+userId+",\"roomId\":"+roomId+"}";
+                var jsonObj = "{\"userId\":"+userId+"}";
                 authReq.data=jsonObj;
                 // var headerBuf = new ArrayBuffer(rawHeaderLen);
                 // var headerView = new DataView(headerBuf, 0);
@@ -165,11 +167,29 @@
             $("#content").append($("#send_msg").val())
             $("#send_msg").val("")
         }
+
+        function  joinRoom(){
+            var userId = $("#user_id").val()
+            var roomId =$("#room_id").val()
+            var jRoom =new Protocol()
+            jRoom.appkey = "1233";
+            jRoom.operation = 5;
+            jRoom.version = 1;
+            jRoom.cmd="user_join_room_cmd";
+            jRoom.token=token
+            var msgData ="{\"roomId\":"+roomId+",\"userId\":"+userId+"}";
+            jRoom.data=msgData;
+            ws.send(jRoom.toArrayBuffer());
+        }
+
         connect();
 
         $(function(){
             $("#sendButton").click(function () {
                 sendMsg();
+            });
+            $("#joinButton").click(function () {
+                joinRoom();
             });
         });
     </script>

@@ -44,10 +44,20 @@ public class ConnManagerUtil {
         CLIENT_MAP.put(connId, client);
     }
 
-    public static void clientGet(String connId) {
-        CLIENT_MAP.get(connId);
+    public static Client clientGet(String connId) {
+        return CLIENT_MAP.get(connId);
     }
 
+    /**
+     * 连接绑定userid
+     * @param userId
+     */
+    public static void connBindUserId(String connId ,String userId) {
+        Client client = CLIENT_MAP.get(connId);
+        if(Objects.nonNull(client)){
+            client.setUserId(userId);
+        }
+    }
     public static void clientRemove(String connId) {
         CLIENT_MAP.remove(connId);
     }
@@ -103,6 +113,14 @@ public class ConnManagerUtil {
        return  ROOM_CONN_MAP.size();
     }
 
+    /**
+     * 获取房间内的连接
+     * @param roomId
+     * @return
+     */
+    public static List<String> connsInRoom(Integer roomId){
+        return ROOM_CONN_MAP.get(roomId);
+    }
     /**
      * 总的房间id
      * @return
@@ -178,12 +196,12 @@ public class ConnManagerUtil {
      */
     public static void closeConn(Channel ch){
         String connId = ch.attr(AppConstants.KEY_CONN_ID).get();
-        String roomId = ch.attr(AppConstants.KEY_ROOM_ID).get();
+        Integer roomId = ch.attr(AppConstants.KEY_ROOM_ID).get();
         if (StringUtils.isNotBlank(connId)) {
             clientRemove(connId);
         }
-        if(StringUtils.isNotBlank(roomId)){
-            roomConnRemove(Integer.valueOf(roomId),connId);
+        if(Objects.nonNull(roomId)){
+            roomConnRemove(roomId,connId);
         }
         if(ch.isActive()){
             ch.close();

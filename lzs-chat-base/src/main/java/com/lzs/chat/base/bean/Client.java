@@ -21,10 +21,6 @@ public class Client {
      * 用户id
      */
     private String userId;
-    /**
-     * 房间号
-     */
-    private Integer roomId;
 
     /**
      * 连接对象

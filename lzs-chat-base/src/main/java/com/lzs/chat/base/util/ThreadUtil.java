@@ -12,7 +12,7 @@ import java.util.concurrent.*;
  * @since <版本号>
  */
 public class ThreadUtil {
-    public static final   int corePoolsize=2;
+    public static final   int corePoolsize=1;
     public static final   int maximumPoolSize=10;
     public static final   int max_capacity=100;
 

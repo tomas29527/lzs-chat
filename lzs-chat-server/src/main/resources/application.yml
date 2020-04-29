@@ -10,7 +10,7 @@ server:
     suffix: .html
     cache: false
   tomcat:
-    max-threads: 500
+    max-threads: 100
     min-spare-threads: 10
   connection-timeout: 5000
 

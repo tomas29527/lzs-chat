@@ -1,5 +1,6 @@
 package com.lzs.chat.base.dto.resp;
 
+import com.lzs.chat.base.bean.MonitorInfoBean;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -26,4 +27,6 @@ public class ChatInfoRespDto {
     private int countRoom;
     @ApiModelProperty(value = "房间在线人数")
     private Map<Integer,Integer> roomOlineUsers;
+    @ApiModelProperty(value = "服务信息")
+    private MonitorInfoBean monitorInfoBean;
 }

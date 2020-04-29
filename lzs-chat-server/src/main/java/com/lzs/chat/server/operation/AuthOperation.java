@@ -29,12 +29,11 @@ public class AuthOperation extends AbstractOperation {
 
     @Override
     public void action(Channel ch, Message.Protocol protocol) throws Exception {
+        log.info("连接验证== ch:{}",ch);
         //验证appkey
         authAppKey(protocol,appkey);
         //认证的参数验证
         AuthReqDto authReq = authParamsCheck(protocol);
-        //验证key
-        log.debug("auth appkey={}", protocol.getAppkey());
         ThreadUtil.submit(() -> {
             // connection auth
             try {

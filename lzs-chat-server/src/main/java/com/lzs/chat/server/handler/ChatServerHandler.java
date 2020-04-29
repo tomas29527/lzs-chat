@@ -39,12 +39,12 @@ public class ChatServerHandler extends SimpleChannelInboundHandler<Message.Proto
      */
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
-        log.info("==========客户端与服务端连接开启==========");
+        Channel ch = ctx.channel();
         // 添加连接信息
         String uniqueCode = SnowFlake.getUniqueCode();
         //设置连接id
-        Channel ch = ctx.channel();
         ch.attr(AppConstants.KEY_CONN_ID).set(uniqueCode);
+        log.info("==========客户端与服务端连接开启========== chId:{}",uniqueCode);
         //加入到连接缓存
         Client client = Client.builder()
                 .channel(ch)

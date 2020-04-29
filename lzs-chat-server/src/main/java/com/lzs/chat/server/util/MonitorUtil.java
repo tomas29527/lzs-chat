@@ -30,7 +30,7 @@ public class MonitorUtil {
      * @return
      * @throws Exception
      */
-    public static MonitorInfoBean getMonitorInfoBean() throws Exception {
+    public static MonitorInfoBean getMonitorInfoBean() {
         int kb = 1024;
         // 可使用内存
         long totalMemory = Runtime.getRuntime().totalMemory() / kb;

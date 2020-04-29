@@ -1,7 +1,9 @@
 package com.lzs.chat.server.controller;
 
+import com.lzs.chat.base.bean.MonitorInfoBean;
 import com.lzs.chat.base.dto.resp.ChatInfoRespDto;
 import com.lzs.chat.base.connManager.ConnManagerUtil;
+import com.lzs.chat.server.util.MonitorUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,10 +44,12 @@ public class ChatController {
         for (Integer integer : integers) {
             roomOlineUsers.put(integer,ConnManagerUtil.countRoomConn(integer));
         }
+        MonitorInfoBean monitorInfoBean = MonitorUtil.getMonitorInfoBean();
         return  ChatInfoRespDto.builder()
                 .countConn(ConnManagerUtil.countClient())
                  .countRoom(ConnManagerUtil.countRoom())
                 .roomOlineUsers(roomOlineUsers)
+                .monitorInfoBean(monitorInfoBean)
                 .build();
     }
 

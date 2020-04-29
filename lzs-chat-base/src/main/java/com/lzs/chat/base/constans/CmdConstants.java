@@ -23,8 +23,16 @@ public class CmdConstants {
          * 发送消息给其他用户
          */
         CMD_METHOD_MAP.put("user_send_msg_cmd","sendMsgToOther");
+        /**
+         * 加入房间
+         */
+        CMD_METHOD_MAP.put("user_join_room_cmd","userJoinRoom");
     }
 
+    /**
+     * 用户加入房间cmd
+     */
+    public static  String USER_JOIN_ROOM_CMD ="user_join_room_cmd";
     /**
      * 用户上线cmd
      */

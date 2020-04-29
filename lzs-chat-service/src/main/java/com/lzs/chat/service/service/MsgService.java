@@ -14,5 +14,11 @@ public interface MsgService {
      * @param protocol 协议
      * @return 是否处理成功
      */
-    Message.Protocol sendMsgToOther(Message.Protocol protocol, Channel ch);
+    void sendMsgToOther(Message.Protocol protocol, Channel ch);
+    /**
+     * 发送消息给其他用户
+     * @param protocol 协议
+     * @return 是否处理成功
+     */
+    void userJoinRoom(Message.Protocol protocol, Channel ch);
 }
