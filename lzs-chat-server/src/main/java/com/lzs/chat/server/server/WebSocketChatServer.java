@@ -5,12 +5,13 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import java.util.concurrent.ThreadFactory;
 
 /**
  * websocket server
@@ -19,21 +20,27 @@ import org.springframework.stereotype.Component;
  */
 @Component("webSocketChatServer")
 @Slf4j
-public class WebSocketChatServer implements ChatServer {
+public class WebSocketChatServer extends SocketrBase implements ChatServer {
 
     @Value("${chat.websocket.port:9090}")
     private int port;
     @Autowired
     private WebSocketServerInitializer serverInitializer;
 
-    private final EventLoopGroup bossGroup = new NioEventLoopGroup();
-    private final EventLoopGroup workGroup = new NioEventLoopGroup();
+    private EventLoopGroup bossGroup;
+    private EventLoopGroup workGroup;
 
     private ChannelFuture channelFuture;
 
     @Override
     public void start() throws Exception {
         try {
+            int nWorkers= Runtime.getRuntime().availableProcessors()*2;
+            ThreadFactory bossFactory = bossThreadFactory("chat.acceptor.boss");
+            ThreadFactory workerFactory = workerThreadFactory("chat.acceptor.worker");
+            bossGroup = initEventLoopGroup(1, bossFactory);
+            workGroup = initEventLoopGroup(nWorkers, workerFactory);
+
             ServerBootstrap b = new ServerBootstrap()
                     .group(bossGroup, workGroup)
                     .channel(NioServerSocketChannel.class)
@@ -70,11 +77,12 @@ public class WebSocketChatServer implements ChatServer {
             channelFuture.channel().close().syncUninterruptibly();
         }
         if (bossGroup != null) {
-            bossGroup.shutdownGracefully();
+            bossGroup.shutdownGracefully().syncUninterruptibly();
         }
         if (workGroup != null) {
-            workGroup.shutdownGracefully();
+            workGroup.shutdownGracefully().syncUninterruptibly();
         }
+
     }
 
 }
