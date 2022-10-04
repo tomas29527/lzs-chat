@@ -24,7 +24,7 @@
         <mybatis-plus.version>3.1.0</mybatis-plus.version>
         <asm.version>6.0</asm.version>
         <!--protobuf 版本号-->
-        <protobuf.version>3.11.0</protobuf.version>
+        <protobuf.version>3.16.3</protobuf.version>
         <!--grpc版本号-->
         <grpc.version>1.7.0</grpc.version>
         <jwt.version>3.8.1</jwt.version>
